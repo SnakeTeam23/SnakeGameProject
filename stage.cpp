@@ -50,7 +50,7 @@ int startGame(float y, float x) {
 }
 
 
-int finishWindow(float y, float x){
+int finishGame(float y, float x){
     clear();
     initscr();
     noecho();
@@ -310,7 +310,7 @@ void game() {
 
 int main(){
     if (startGame(0, 0) == 's') game();
-    finishWindow(0, 0);
+    finishGame(0, 0);
 	endwin();
 	return 0;
 }
