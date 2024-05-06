@@ -5,6 +5,7 @@
 #include <vector>
 #include <cstdlib>
 #include <ncurses.h>
+#include <curses.h>
 #include <string>
 #include <unistd.h>
 using namespace std;
@@ -278,22 +279,22 @@ void game() {
 		char d = snake.getDirection();
 
 		switch(input){
-			case KEY_UP:
+			case 'w':
 				if(d !='u' && d !='d') snake.setDirection(0);
 				else if (d =='d') snake.setEnd(true);
 				break;
 
-			case KEY_DOWN: 
+			case 's': 
 				if(d !='d' && d !='u') snake.setDirection(2);
 				else if (d =='u') snake.setEnd(true);
 				break;
 
-			case KEY_LEFT:
+			case 'a':
 				if(d != 'l' && d != 'r') snake.setDirection(3);
 				else if (d == 'r') snake.setEnd(true);
 				break;
 
-			case KEY_RIGHT:
+			case 'd':
 				if(d != 'r' && d != 'l') snake.setDirection(1);
 				else if (d == 'l') snake.setEnd(true);
 				break;    
