@@ -32,13 +32,6 @@ int num_missionPoison = 2;
 int num_missionGate = 1;
 
 
-void newWindow(float y, float x){
-    clear();
-    initscr();
-    noecho();
-    getmaxyx(stdscr, y, x);
-}
-
 int userInput(){
     int userInput = getch();
     refresh();
@@ -48,14 +41,20 @@ int userInput(){
 }
 
 int startGame(float y, float x) { 
-    newWindow(y,x);
-    printw("Press s buttion to start");
+    clear();
+    initscr();
+    noecho();
+    getmaxyx(stdscr, y, x);
+    printw("Press s button to start");
     return userInput();
 }
 
 
 int finishWindow(float y, float x){
-    newWindow(y,x);
+    clear();
+    initscr();
+    noecho();
+    getmaxyx(stdscr, y, x);
     printw("\n \nGame Over! Press any button to finish");
     return userInput();
 }
@@ -141,7 +140,10 @@ int levelUpScreen(float y, float x, int level){
   initscr();
   noecho();
   getmaxyx(stdscr, y, x);
-  newWindow(y,x);
+  clear();
+  initscr();
+  noecho();
+getmaxyx(stdscr, y, x);
   if (level==1){
     printw("Welcome to SnakeGame! \n Level 1");
   }
