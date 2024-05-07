@@ -310,6 +310,7 @@ void game() {
 
 
 int main(){
+	int a = 0;
     if (startGame(0, 0) == 's') game();
     finishGame(0, 0);
 	endwin();
