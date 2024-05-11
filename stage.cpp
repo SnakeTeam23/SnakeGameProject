@@ -32,8 +32,19 @@ char missionGate = 'X';
 #define MISSION_POISON_CNT 2
 #define MISSION_GATE_CNT 2
 
-void start_game(float y, float x);
+// 함수 원형 선언
+void start_game(float, float);
 void game();
+int levelUpScreen(float, float, int);
+int userInput();
+int finishGame(float, float);
+void drawMap(WINDOW*, Snake&, char*, int, int);
+void updateMap(Snake& snake, int map[40][50]);
+void showScore(WINDOW*, int, int, int, int, int);
+void showMission(WINDOW*, int);
+int levelUpScreen(float, float, int);
+void setMission(Snake&, WINDOW*);
+void nextLevel(Snake&,WINDOW*);
 
 
 int userInput(){
@@ -51,6 +62,7 @@ void start_game(float y, float x) {
     getmaxyx(stdscr, y, x);
     printw("Press Any button to start");
     userInput();
+	levelUpScreen(0, 0, 1);
 	game();
 }
 
@@ -155,7 +167,7 @@ getmaxyx(stdscr, y, x);
   else{
     string lev = to_string(level);
     printw("Let's go to next level! It's ");
-    printw(lev.data());
+    printw((const char* )lev.data());
 	printw(" level.");
     printw("\nPress Enter button.");
   }
