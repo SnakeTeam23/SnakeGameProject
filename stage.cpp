@@ -16,8 +16,8 @@ extern void makeBuff(int stage, WINDOW *win1);
 extern void makeNerf(int stage, WINDOW *win1);
 extern void removeNerf(int stage, WINDOW *win1);
 extern void removeBuff(int stage, WINDOW *win1);
-extern vector<position> vnerf_item;
-extern vector<position> vbuff_item;
+extern vector<position> vpoison_item;
+extern vector<position> vapple_item;
 
 char missionBody = 'X';
 char missionBuff = 'X';
@@ -87,28 +87,28 @@ void drawMap(WINDOW* win, Snake& snake, char* table, int row, int col)
                     ch = ' ';
                     break;
                 case '1': //게이트가 생길 수 있는 벽
-                    ch = '*';
-                    break;
-                case '2': //게이트가 생길 수 없는 벽
                     ch = '@';
                     break;
+                case '2': //게이트가 생길 수 없는 벽
+                    ch = '*';
+                    break;
                 case '4': //맵 테두리
-                    ch = '_';
+                    ch = '=';
                     break;
 				case 'h': //snake head
-					ch = 'S';
+					ch = '&';
 					break;
 				case 'b': //snake body
-					ch = 'S';
+					ch = '&';
 					break;
 				case '8': //gate1
-					ch = 'G';
+					ch = '?';
 					break;
 				case '9': //gate2
-					ch = 'G';
+					ch = '?';
 					break;
 				case '3': 
-                    ch = 'O';
+                    ch = '0';
                     break;
                 case '6': //nerf
                     ch = 'X';
@@ -172,18 +172,18 @@ getmaxyx(stdscr, y, x);
 }
 
 void setMission(Snake& snake, WINDOW *win1){
-  if(vbuff_item.empty() ==0){
+  if(vapple_item.empty() ==0){
 	  position head = snake.plus_head();
-	  if(head == vbuff_item.back()){
+	  if(head == vapple_item.back()){
       snake.break_item(win1);
 	  snake.change_snake_length();
 	  snake.apple++;
 	  }
   }
 
-  if(vnerf_item.empty() == 0){
+  if(vpoison_item.empty() == 0){
     position head = snake.plus_head();
-    if(head == vnerf_item.back()){
+    if(head == vpoison_item.back()){
       snake.decrease_snake(win1);
       snake.change_snake_length();
       snake.poison++;
