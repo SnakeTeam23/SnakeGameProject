@@ -16,9 +16,6 @@ extern void makeBuff(int stage, WINDOW *win1);
 extern void makeNerf(int stage, WINDOW *win1);
 extern void removeNerf(int stage, WINDOW *win1);
 extern void removeBuff(int stage, WINDOW *win1);
-extern void breakItem(WINDOW *win1);
-extern vector<Point> decreaseSnake(WINDOW *win1);
-extern position plusHead();
 extern vector<position> vnerf_item;
 extern vector<position> vbuff_item;
 
@@ -124,17 +121,17 @@ void drawMap(WINDOW* win, Snake& snake, char* table, int row, int col)
 }
 
 void updateMap(Snake& snake, int map[40][50]) {
-	snake.setGate(map); 
+	snake.initGate(map); 
 }
 
-void showScore(WINDOW* w, int snakeLen, int level, int buffItem, int nerfItem, int Gate){
+void showScore(WINDOW* w, int snakeLen, int level, int apple, int poison, int Gate){
 	werase(w);
 	wbkgd(w, COLOR_PAIR(level));
 	wborder(w, '|','|','-','-','|','|','|','|');
 	mvwprintw(w, 1, 1, "Score");
 	mvwprintw(w, 2, 1, "Body length: %d/%d", snakeLen, snakeMaxLen);
-	mvwprintw(w, 3, 1, "+: %d ", buffItem);
-	mvwprintw(w, 4, 1, "-: %d ", nerfItem);
+	mvwprintw(w, 3, 1, "+: %d ", apple);
+	mvwprintw(w, 4, 1, "-: %d ", poison);
 	mvwprintw(w, 5, 1, "Gate: %d ", Gate);
 	mvwprintw(w, 6, 1, "Level: %d ", level);
 	wrefresh(w);
@@ -162,57 +159,57 @@ int levelUpScreen(float y, float x, int level){
   noecho();
 getmaxyx(stdscr, y, x);
   if (level==1){
-    printw("Welcome to SnakeGame! \n Level 1");
+    printw("Level 1.\nPress Any key to Start Game...");
   }
   else{
     string lev = to_string(level);
-    printw("Let's go to next level! It's ");
+    printw("Good Job!! You passed Now Level. Let's go to ");
     printw((const char* )lev.data());
 	printw(" level.");
-    printw("\nPress Enter button.");
+    printw("\nPress Enter to continue Game.");
   }
   return userInput();
 }
 
 void setMission(Snake& snake, WINDOW *win1){
   if(vbuff_item.empty() ==0){
-	  position head = snake.plusHead();
+	  position head = snake.plus_head();
 	  if(head == vbuff_item.back()){
-      snake.breakItem(win1);
-	  snake.changeSnakeLen();
-	  snake.buffItem++;
+      snake.break_item(win1);
+	  snake.change_snake_length();
+	  snake.apple++;
 	  }
   }
 
-  if(vnerf_item.empty() ==0){
-    position head = snake.plusHead();
+  if(vnerf_item.empty() == 0){
+    position head = snake.plus_head();
     if(head == vnerf_item.back()){
-      snake.decreaseSnake(win1);
-      snake.changeSnakeLen();
-      snake.nerfItem++;
+      snake.decrease_snake(win1);
+      snake.change_snake_length();
+      snake.poison++;
     }
   }
 
-  if(snake.getSize() == MISSION_BODY_LENGTH) {missionBody ='O';}
-  if(snake.buffItem == MISSION_GROWTH_CNT) {missionBuff = 'O';}
-  if(snake.nerfItem == MISSION_POISON_CNT) {missionNerf = 'O';}
-  if(snake.getGateCnt() == MISSION_GATE_CNT) {missionGate = 'O';}
+  if(snake.get_size() == MISSION_BODY_LENGTH) {missionBody ='O';}
+  if(snake.apple == MISSION_GROWTH_CNT) {missionBuff = 'O';}
+  if(snake.poison == MISSION_POISON_CNT) {missionNerf = 'O';}
+  if(snake.get_gate_pass_cnt() == MISSION_GATE_CNT) {missionGate = 'O';}
 }
 
 void nextLevel(Snake& snake,WINDOW *win1){
 	if((missionBody == 'O')&&(missionGate=='O')&&(missionBuff=='O')&&(missionNerf=='O')){
 		snake.resize(3);
-		snake.buffItem =0;
-		snake.nerfItem =0;
-		snake.setGateCnt(0);
+		snake.apple =0;
+		snake.poison =0;
+		snake.set_gate_pass_cnt(0);
 		missionBody = 'X'; 
 		missionBuff = 'X';
 		missionNerf = 'X';
 		missionGate = 'X';
-		removeBuff(snake.getLevel()-1,win1);
-		removeNerf(snake.getLevel()-1,win1);
-		snake.setLevel(snake.getLevel()+1);
-		if (levelUpScreen(0,0, snake.getLevel()) == 13) {}; //엔터 누르면 다음 레벨로 게임 계속 진행
+		removeBuff(snake.get_level()-1,win1);
+		removeNerf(snake.get_level()-1,win1);
+		snake.set_level(snake.get_level()+1);
+		if (levelUpScreen(0,0, snake.get_level()) == 13) {}; //엔터 누르면 다음 레벨로 게임 계속 진행
 	}
 }
 
@@ -245,14 +242,14 @@ void game() {
 
 	while(!snake.isEnd()){ //exit가 true가 될때까지 반복문
 		WINDOW *win1 = newwin(40, 50, 0, 0);
-		showMission(mission, snake.getLevel());
-		showScore(scoreBoard, snake.getSnakeLen(), snake.getLevel(), snake.buffItem, snake.nerfItem, snake.getGateCnt());
+		showMission(mission, snake.get_level());
+		showScore(scoreBoard, snake.get_snake_length(), snake.get_level(), snake.apple, snake.poison, snake.get_gate_pass_cnt());
 	
 
 		srand(time(NULL)); 
-		char *map_table = snake.setMaptoList(map[snake.getLevel()-1]);
-		wbkgd(win1, COLOR_PAIR(snake.getLevel()));
-		wattron(win1, COLOR_PAIR(snake.getLevel()));
+		char *map_table = snake.change_List(map[snake.get_level()-1]);
+		wbkgd(win1, COLOR_PAIR(snake.get_level()));
+		wattron(win1, COLOR_PAIR(snake.get_level()));
 		nodelay(win1, TRUE);
 		keypad(win1, TRUE);
 		refresh();
@@ -261,35 +258,35 @@ void game() {
 		drawMap(win1, snake, map_table, snake.getRow(), snake.getCol());
     	setMission(snake,win1);
 		if (mapCnt == 0) {
-			(snake, map[snake.getLevel()-1]);
+			(snake, map[snake.get_level()-1]);
 		}
 		mapCnt+= 1;
 
 		if (mapCnt == 100) {
-			snake.rmGate(map[snake.getLevel()-1]);
-			updateMap(snake, map[snake.getLevel()-1]);
+			snake.remove_gate(map[snake.get_level()-1]);
+			updateMap(snake, map[snake.get_level()-1]);
 			mapCnt = 1;
 		}
 
 		if (buffCnt == 0) {
-			makeNerf(snake.getLevel()-1,win1);
+			makeNerf(snake.get_level()-1,win1);
 		}
 		buffCnt+= 1;
 
 		if (buffCnt == 70) {
-			removeBuff(snake.getLevel()-1,win1);
-			makeNerf(snake.getLevel()-1,win1);
+			removeBuff(snake.get_level()-1,win1);
+			makeNerf(snake.get_level()-1,win1);
 			buffCnt = 1;
 		}
 
 		if (nerfCnt == 0) {
-			makeBuff(snake.getLevel()-1,win1);
+			makeBuff(snake.get_level()-1,win1);
 		}
 		nerfCnt+= 1;
 
 		if (nerfCnt == 35) {
-			removeNerf(snake.getLevel()-1,win1);
-			makeBuff(snake.getLevel()-1,win1);
+			removeNerf(snake.get_level()-1,win1);
+			makeBuff(snake.get_level()-1,win1);
 			nerfCnt = 1;
 		}
 
@@ -318,9 +315,9 @@ void game() {
 				break;    
 		}
 
-		if(snake.getSize() < 3) snake.setEnd(TRUE);
-		snake.mvSnakeBody(); 
-		snake.mvSnakeHead(map[snake.getLevel()-1]);
+		if(snake.get_size() < 3) snake.setEnd(TRUE);
+		snake.move_snake_body(); 
+		snake.move_snake_head(map[snake.get_level()-1]);
         nextLevel(snake, win1);
 		usleep(snake.getSpeed());
 	}

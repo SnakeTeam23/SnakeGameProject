@@ -18,7 +18,7 @@ Snake::Snake(int r, int c) : row(r), col(c){
 		map_list = new char[row*col];
 		level=1;
 		snakeLen=3;
-		setGateCnt(0);
+		set_gate_pass_cnt(0);
 	}
 
 //소멸자
@@ -48,7 +48,7 @@ int Snake::gateDirection(Point gate, int map[40][50]){ //게이트에 따라 뭔
 }
 
 
-void Snake::mvSnakeHead(int map[40][50]){ //스네이크를 설정한 방향으로 바꿈
+void Snake::move_snake_head(int map[40][50]){ //스네이크를 설정한 방향으로 바꿈
 	snake_vec[0] += direction; //가는 방향으로 계속 증가하게
 	for(int i=0; i<wall.size(); i++) { //벽의 벡터만큼 for문
 		if(snake_vec[0] == wall[i]) { //벽일경우
@@ -56,7 +56,7 @@ void Snake::mvSnakeHead(int map[40][50]){ //스네이크를 설정한 방향으�
 				snake_vec[0].setX(gate[0].getX()); //snake의 head부분을 gate[0]위치로 변경
 				snake_vec[0].setY(gate[0].getY());
 				setDirection(gateDirection(gate[0], map)); //snake의 head 의 방향 바꾸어줌
-				setGateCnt(1);
+				set_gate_pass_cnt(1);
 				break;
 			}
 
@@ -64,25 +64,25 @@ void Snake::mvSnakeHead(int map[40][50]){ //스네이크를 설정한 방향으�
 				snake_vec[0].setX(gate[1].getX());
 				snake_vec[0].setY(gate[1].getY());
 				setDirection(gateDirection(gate[1], map));
-				setGateCnt(1);
+				set_gate_pass_cnt(1);
 				break;
 			}
 
 			else {
 				setEnd(true); //gate가 아닌 벽을 만났을 경우는 exit을 true로 변경하고 게이트를 지움
-				rmGate(map);
+				remove_gate(map);
 			}
 		}
 	}
 }
 
 
-void Snake::mvSnakeBody(){ //head에 따라 body도 함께 변경하게
+void Snake::move_snake_body(){ //head에 따라 body도 함께 변경하게
 	for(unsigned int i=snake_vec.size()-1; i>0; --i) snake_vec[i] = snake_vec[i - 1];
 }
 
 
-char* Snake::setMaptoList(int map[40][50]){ //2차원배열을 리스트로 변경함
+char* Snake::change_List(int map[40][50]){ //2차원배열을 리스트로 변경함
 	memset(map_list, ' ', row * col);
 	for(unsigned int i=0; i<40; i++) {
 		for(int j=0; j<50; j++){
@@ -123,14 +123,14 @@ int Snake::getSpeed() {return speed;}
 int Snake::getRow() {return row;}
 int Snake::getCol() {return col;}
 
-int Snake::getLevel() {return level;}
-int Snake::getSnakeLen(){return snakeLen;}
+int Snake::get_level() {return level;}
+int Snake::get_snake_length(){return snakeLen;}
 
 
-void Snake::setGate(int map[40][50]) { //gate설정
+void Snake::initGate(int map[40][50]) { //gate설정
 	int randWall = rand() % wall.size(); //랜덤함수 추출
 	int randWall2 = rand() % wall.size();
-	if(randWall == randWall2) setGate(map); //추출한 두 랜덤 값이 같으면 다시 호출
+	if(randWall == randWall2) initGate(map); //추출한 두 랜덤 값이 같으면 다시 호출
 	gate[0] = wall[randWall]; //벡터에 대입
 	gate[1] = wall[randWall2];
 	map[gate[0].getY()][gate[0].getX()] = 98; //map표시를 위해 바꾸어줌
@@ -138,7 +138,7 @@ void Snake::setGate(int map[40][50]) { //gate설정
 }
 
 
-void Snake::rmGate(int map[40][50])
+void Snake::remove_gate(int map[40][50])
 {
 	map[gate[0].getY()][gate[0].getX()] = 1; //전 gate의 map 다시 바꾸어줌
 	map[gate[1].getY()][gate[1].getX()] = 1;
@@ -148,7 +148,7 @@ void Snake::rmGate(int map[40][50])
 	gate[1].setY(0);
 }
 
-void Snake::setGateCnt(int i) {
+void Snake::set_gate_pass_cnt(int i) {
 	if (i==0){
 		gateCnt = 0;
 	}
@@ -156,27 +156,27 @@ void Snake::setGateCnt(int i) {
 		gateCnt += 1;
 	}
 }
-int Snake::getGateCnt() {return gateCnt;}
+int Snake::get_gate_pass_cnt() {return gateCnt;}
 
 //item
-int Snake::getSize(){return snake_vec.size();}
-void Snake::setLevel(int new_level){
+int Snake::get_size(){return snake_vec.size();}
+void Snake::set_level(int new_level){
 	level = new_level;
 }
 
-void Snake::decreaseSnake(WINDOW *win1){
+void Snake::decrease_snake(WINDOW *win1){
 	removeNerf(level-1,win1);
 	snake_vec.pop_back();
 	makeBuff(level-1,win1);
 }
 
-void Snake::breakItem(WINDOW *win1){
+void Snake::break_item(WINDOW *win1){
 	removeBuff(level -1,win1);
 	snake_vec.push_back(snake_vec.back());
 	makeNerf(level-1,win1);
 }
 
-position Snake::plusHead(){ //머리 position 타입으로 바꿔주기
+position Snake::plus_head(){ //머리 position 타입으로 바꿔주기
 	position head(snake_vec[0].getX(), snake_vec[0].getY());
 	return head;
 }
@@ -185,4 +185,4 @@ void Snake::resize(int new_size){
 	snake_vec.resize(new_size);
 }
 
-void Snake::changeSnakeLen(){snakeLen = snake_vec.size();}
+void Snake::change_snake_length(){snakeLen = snake_vec.size();}
