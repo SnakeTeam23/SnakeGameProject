@@ -133,10 +133,10 @@ void showMission(WINDOW* w, int level){
   wbkgd(w, COLOR_PAIR(level));
   wborder(w, '|','|','-','-','|','|','|','|');
   mvwprintw(w, 1, 1, "Mission");
-  mvwprintw(w, 2, 1, "Body length: 6 ( %c )", missionBody);
-  mvwprintw(w, 3, 1, "+: 2  ( %c )", missionBuff);
-  mvwprintw(w, 4, 1, "-: 2  ( %c )", missionNerf);
-  mvwprintw(w, 5, 1, "Gate: 1  ( %c )" ,missionGate);
+  mvwprintw(w, 2, 1, "Body length: %d ( %c )", MISSION_BODY_LENGTH, missionBody);
+  mvwprintw(w, 3, 1, "+: %d  ( %c )", MISSION_GROWTH_CNT, missionBuff);
+  mvwprintw(w, 4, 1, "-: %d  ( %c )", MISSION_POISON_CNT, missionNerf);
+  mvwprintw(w, 5, 1, "Gate: %d  ( %c )", MISSION_GATE_CNT, missionGate);
   wrefresh(w);
 }
 
@@ -211,8 +211,8 @@ void game() {
 	cbreak();
 
 	start_color();
-	init_pair(1, COLOR_WHITE, COLOR_BLUE);
-	init_pair(2, COLOR_WHITE, COLOR_GREEN);
+	init_pair(1, COLOR_WHITE, COLOR_MAGENTA);
+	init_pair(2, COLOR_WHITE, COLOR_CYAN);
 	init_pair(3, COLOR_WHITE, COLOR_YELLOW);
 	init_pair(4, COLOR_WHITE, COLOR_RED);
 
@@ -229,23 +229,23 @@ void game() {
 	int buffCnt = 0;
 	int nerfCnt = 0;
 
-	while(!snake.getEnd()){ //exit가 true가 될때까지 반복문
-	WINDOW *win1 = newwin(40, 50, 0, 0);
-	showMission(mission, snake.getLevel());
-	showScore(scoreBoard, snake.getSnakeLen(), snake.getLevel(), snake.buffItem, snake.nerfItem, snake.getGateCnt());
+	while(!snake.isEnd()){ //exit가 true가 될때까지 반복문
+		WINDOW *win1 = newwin(40, 50, 0, 0);
+		showMission(mission, snake.getLevel());
+		showScore(scoreBoard, snake.getSnakeLen(), snake.getLevel(), snake.buffItem, snake.nerfItem, snake.getGateCnt());
 	
 
-	srand(time(NULL)); 
-	char *map_table = snake.setMaptoList(map[snake.getLevel()-1]);
-	wbkgd(win1, COLOR_PAIR(snake.getLevel()));
-	wattron(win1, COLOR_PAIR(snake.getLevel()));
-	nodelay(win1, TRUE);
-	keypad(win1, TRUE);
-	refresh();
+		srand(time(NULL)); 
+		char *map_table = snake.setMaptoList(map[snake.getLevel()-1]);
+		wbkgd(win1, COLOR_PAIR(snake.getLevel()));
+		wattron(win1, COLOR_PAIR(snake.getLevel()));
+		nodelay(win1, TRUE);
+		keypad(win1, TRUE);
+		refresh();
 
-	wrefresh(win1);
+		wrefresh(win1);
 		drawMap(win1, snake, map_table, snake.getRow(), snake.getCol());
-    setMission(snake,win1);
+    	setMission(snake,win1);
 		if (mapCnt == 0) {
 			(snake, map[snake.getLevel()-1]);
 		}

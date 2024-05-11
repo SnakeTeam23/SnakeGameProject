@@ -6,7 +6,7 @@
 #include "position.h"
 using namespace std;
 
-const int snakeMaxLen = 6;
+const int snakeMaxLen = 8;
 
 class Snake{
 private:
@@ -33,7 +33,7 @@ public:
 	void setEnd(bool e);
 	int gateDirection(Point gate, int map[40][50]);
 	char getDirection();
-	bool getEnd();
+	bool isEnd();
 	int getSpeed();
 	int getRow();
 	int getCol();

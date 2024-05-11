@@ -118,7 +118,7 @@ char Snake::getDirection() { //방향 설정
 
 
 void Snake::setEnd(bool e) {end = e;}
-bool Snake::getEnd() {return end;}
+bool Snake::isEnd() {return end;}
 int Snake::getSpeed() {return speed;}
 int Snake::getRow() {return row;}
 int Snake::getCol() {return col;}
