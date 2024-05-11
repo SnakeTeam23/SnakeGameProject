@@ -27,10 +27,10 @@ char missionBuff = 'X';
 char missionNerf = 'X';
 char missionGate = 'X';
 
-int num_missionBody = 6;
-int num_missionGrowth = 2;
-int num_missionPoison = 2;
-int num_missionGate = 1;
+#define MISSION_BODY_LENGTH 6
+#define MISSION_GROWTH_CNT 2
+#define MISSION_POISON_CNT 2
+#define MISSION_GATE_CNT 1
 
 
 int userInput(){
@@ -177,10 +177,10 @@ void setMission(Snake& snake, WINDOW *win1){
     }
   }
 
-  if(snake.getSize() == num_missionBody) {missionBody ='O';}
-  if(snake.buffItem == num_missionGrowth) {missionBuff = 'O';}
-  if(snake.nerfItem == num_missionPoison) {missionNerf = 'O';}
-  if(snake.getGateCnt() == num_missionGate) {missionGate = 'O';}
+  if(snake.getSize() == MISSION_BODY_LENGTH) {missionBody ='O';}
+  if(snake.buffItem == MISSION_GROWTH_CNT) {missionBuff = 'O';}
+  if(snake.nerfItem == MISSION_POISON_CNT) {missionNerf = 'O';}
+  if(snake.getGateCnt() == MISSION_GATE_CNT) {missionGate = 'O';}
 }
 
 void nextLevel(Snake& snake,WINDOW *win1){

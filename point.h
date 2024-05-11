@@ -7,7 +7,7 @@ protected:
 	int x,y;
 
 public:
-    //constructor
+    //생성자
 	Point();
 	Point(int x, int y);
 
@@ -17,7 +17,6 @@ public:
 	int getX() const;
 	int getY() const;
 
-    //operator overloading
 	Point& operator=(const Point& v);
 	Point& operator+=(const Point& v);
 	Point operator+(const Point& v);
