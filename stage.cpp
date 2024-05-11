@@ -218,10 +218,12 @@ void game() {
 
 	getmaxyx(stdscr, y, x);
 	WINDOW *win1 = newwin(40, 50, 0, 0);
+	box(win1, 0, 0);
+	refresh();
     WINDOW *mission = newwin(10, 40, 12, 50);
     wrefresh(mission);
     
-	 WINDOW *scoreBoard = newwin(10, 40, 0, 50);
+	WINDOW *scoreBoard = newwin(10, 40, 0, 50);
 	wrefresh(scoreBoard);
 
 	Snake snake(40, 50);
