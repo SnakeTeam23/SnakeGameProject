@@ -87,28 +87,28 @@ void drawMap(WINDOW* win, Snake& snake, char* table, int row, int col)
                     ch = ' ';
                     break;
                 case '1': //게이트가 생길 수 있는 벽
-                    ch = '@';
-                    break;
-                case '2': //게이트가 생길 수 없는 벽
                     ch = '*';
                     break;
+                case '2': //게이트가 생길 수 없는 벽
+                    ch = '#';
+                    break;
                 case '4': //맵 테두리
-                    ch = '=';
+                    ch = '_';
                     break;
 				case 'h': //snake head
-					ch = '&';
+					ch = 'S';
 					break;
 				case 'b': //snake body
-					ch = '&';
+					ch = 'S';
 					break;
 				case '8': //gate1
-					ch = '?';
+					ch = 'G';
 					break;
 				case '9': //gate2
-					ch = '?';
+					ch = 'G';
 					break;
 				case '3': 
-                    ch = '0';
+                    ch = 'O';
                     break;
                 case '6': //nerf
                     ch = 'X';
@@ -258,7 +258,7 @@ void game() {
 		drawMap(win1, snake, map_table, snake.getRow(), snake.getCol());
     	setMission(snake,win1);
 		if (mapCnt == 0) {
-			(snake, map[snake.get_level()-1]);
+			updateMap(snake, map[snake.get_level()-1]);
 		}
 		mapCnt+= 1;
 
