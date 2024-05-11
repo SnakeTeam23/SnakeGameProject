@@ -46,7 +46,7 @@ int startGame(float y, float x) {
     initscr();
     noecho();
     getmaxyx(stdscr, y, x);
-    printw("Press s button to start");
+    printw("Press Any button to start");
     return userInput();
 }
 
@@ -311,7 +311,8 @@ void game() {
 
 int main(){
 	int a = 0;
-    if (startGame(0, 0) == 's') game();
+    startGame(0, 0);
+	game();
     finishGame(0, 0);
 	endwin();
 	return 0;
