@@ -78,28 +78,28 @@ void drawMap(WINDOW* win, Snake& snake, char* table, int row, int col)
                     ch = ' ';
                     break;
                 case '1': //게이트가 생길 수 있는 벽
-                    ch = '@';
-                    break;
-                case '2': //게이트가 생길 수 없는 벽
                     ch = '*';
                     break;
+                case '2': //게이트가 생길 수 없는 벽
+                    ch = '@';
+                    break;
                 case '4': //맵 테두리
-                    ch = '=';
+                    ch = '_';
                     break;
 				case 'h': //snake head
-					ch = '&';
+					ch = 'S';
 					break;
 				case 'b': //snake body
-					ch = '&';
+					ch = 'S';
 					break;
-				case '8': //gate1 임시표시
-					ch = '?';
+				case '8': //gate1
+					ch = 'G';
 					break;
-				case '9': //gate2 임시표시
-					ch = '?';
+				case '9': //gate2
+					ch = 'G';
 					break;
-				case '3': //buff
-                    ch = '0';
+				case '3': 
+                    ch = 'O';
                     break;
                 case '6': //nerf
                     ch = 'X';
