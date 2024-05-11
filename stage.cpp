@@ -32,6 +32,9 @@ char missionGate = 'X';
 #define MISSION_POISON_CNT 2
 #define MISSION_GATE_CNT 2
 
+void start_game(float y, float x);
+void game();
+
 
 int userInput(){
     int userInput = getch();
@@ -41,13 +44,14 @@ int userInput(){
     return userInput;
 }
 
-int startGame(float y, float x) { 
+void start_game(float y, float x) { 
     clear();
     initscr();
     noecho();
     getmaxyx(stdscr, y, x);
     printw("Press Any button to start");
-    return userInput();
+    userInput();
+	game();
 }
 
 
@@ -311,8 +315,7 @@ void game() {
 
 int main(){
 	int a = 0;
-    startGame(0, 0);
-	game();
+    start_game(0, 0);
     finishGame(0, 0);
 	endwin();
 	return 0;
