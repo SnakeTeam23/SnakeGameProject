@@ -66,7 +66,3 @@ void removeNerf(int stage, WINDOW *win1){//독 없애기
         vpoison_item.pop_back();
     }
 }
-
-
-
-//연습용 코드지롱~~
