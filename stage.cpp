@@ -93,7 +93,7 @@ void drawMap(WINDOW* win, Snake& snake, char* table, int row, int col)
                     ch = '#';
                     break;
                 case '4': //맵 테두리
-                    ch = '_';
+                    ch = '-';
                     break;
 				case 'h': //snake head
 					ch = 'S';
@@ -273,7 +273,7 @@ void game() {
 		}
 		buffCnt+= 1;
 
-		if (buffCnt == 70) {
+		if (buffCnt == 100) { // 10초에 한번씩 바뀝니다.
 			removeBuff(snake.get_level()-1,win1);
 			makeNerf(snake.get_level()-1,win1);
 			buffCnt = 1;
@@ -284,7 +284,7 @@ void game() {
 		}
 		nerfCnt+= 1;
 
-		if (nerfCnt == 35) {
+		if (nerfCnt == 70) { // 7초에 한번씩 바뀝니다.
 			removeNerf(snake.get_level()-1,win1);
 			makeBuff(snake.get_level()-1,win1);
 			nerfCnt = 1;

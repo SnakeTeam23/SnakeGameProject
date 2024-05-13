@@ -14,7 +14,7 @@ Snake::Snake(int r, int c) : row(r), col(c){
 			snake_vec.push_back(Point(col/2, row/2+i));
 		setDirection(0);
 		end = false;
-		speed = 130000;
+		speed = 150000;
 		map_list = new char[row*col];
 		level=1;
 		snakeLen=3;
