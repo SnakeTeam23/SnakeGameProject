@@ -66,3 +66,7 @@ void removeNerf(int stage, WINDOW *win1){//독 없애기
         vpoison_item.pop_back();
     }
 }
+
+
+
+//이거는 브랜치 새로 따서 작업해보는 거 연습이야~
