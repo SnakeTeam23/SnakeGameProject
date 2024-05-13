@@ -67,3 +67,6 @@ void removeNerf(int stage, WINDOW *win1){//독 없애기
     }
 }
 
+
+
+//연습용 코드지롱~~
