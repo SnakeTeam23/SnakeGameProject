@@ -35,15 +35,12 @@ void Snake::setDirection(int d){ //스네이크의 방향을 설정하는 함수
 }
 
 int Snake::gateDirection(Point gate, int map[40][50]){ //게이트에 따라 뭔가를 설정
-	Point A = gate + Point(0,-1) ;
-	if(map[A.getY()][A.getX()]==0) return 0;
-	Point B = gate + Point(1,0) ;
-	if(map[B.getY()][B.getX()]==0) return 1;
-	Point C = gate + Point(0,1) ;
-	if(map[C.getY()][C.getX()]==0) return 2;
-	Point D = gate + Point(-1,0) ;
-	if(map[D.getY()][D.getX()]==0) return 3;
-
+	Point points[4] = {Point(0, -1), Point(1, 0), Point(0, 1), Point(-1, 0)};
+	Point A(0, 0);
+	for(int i = 0; i < 4; i++){
+		A = gate + points[i];
+		if(map[A.getY()][A.getX()] == 0) return i;
+	}
 	return -1;
 }
 
