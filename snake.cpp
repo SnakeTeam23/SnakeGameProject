@@ -35,15 +35,12 @@ void Snake::setDirection(int d){ //스네이크의 방향을 설정하는 함수
 }
 
 int Snake::gateDirection(Point gate, int map[40][50]){ //게이트에 따라 뭔가를 설정
-	Point A = gate + Point(0,-1) ;
-	if(map[A.getY()][A.getX()]==0) return 0;
-	Point B = gate + Point(1,0) ;
-	if(map[B.getY()][B.getX()]==0) return 1;
-	Point C = gate + Point(0,1) ;
-	if(map[C.getY()][C.getX()]==0) return 2;
-	Point D = gate + Point(-1,0) ;
-	if(map[D.getY()][D.getX()]==0) return 3;
-
+	Point points[4] = {Point(0, -1), Point(1, 0), Point(0, 1), Point(-1, 0)};
+	Point A(0, 0);
+	for(int i = 0; i < 4; i++){
+		A = gate + points[i];
+		if(map[A.getY()][A.getX()] == 0) return i;
+	}
 	return -1;
 }
 
@@ -53,18 +50,12 @@ void Snake::move_snake_head(int map[40][50]){ //스네이크를 설정한 방향
 	for(int i=0; i<wall.size(); i++) { //벽의 벡터만큼 for문
 		if(snake_vec[0] == wall[i]) { //벽일경우
 			if(snake_vec[0] == gate[1]) { //gate[1]과만나면
-				snake_vec[0].setX(gate[0].getX()); //snake의 head부분을 gate[0]위치로 변경
-				snake_vec[0].setY(gate[0].getY());
-				setDirection(gateDirection(gate[0], map)); //snake의 head 의 방향 바꾸어줌
-				set_gate_pass_cnt(1);
+				checkVisitWall(0, map);
 				break;
 			}
 
 			else if(snake_vec[0] == gate[0]) { //gate[0]과 만나면
-				snake_vec[0].setX(gate[1].getX());
-				snake_vec[0].setY(gate[1].getY());
-				setDirection(gateDirection(gate[1], map));
-				set_gate_pass_cnt(1);
+				checkVisitWall(1, map);
 				break;
 			}
 
@@ -74,6 +65,13 @@ void Snake::move_snake_head(int map[40][50]){ //스네이크를 설정한 방향
 			}
 		}
 	}
+}
+
+void Snake::checkVisitWall(bool gateNum, int map[40][50]){
+	snake_vec[0].setX(gate[gateNum].getX()); //snake의 head부분을 gate[0]위치로 변경
+	snake_vec[0].setY(gate[gateNum].getY());
+	setDirection(gateDirection(gate[gateNum], map)); //snake의 head 의 방향 바꾸어줌
+	set_gate_pass_cnt(1);
 }
 
 
@@ -96,8 +94,8 @@ char* Snake::change_List(int map[40][50]){ //2차원배열을 리스트로 변�
 				case 3 : map_list[i*col+j] = '3'; break;
 				case 4 : map_list[i*col+j] = '4'; break;
 				case 6 : map_list[i*col+j] = '6'; break;
-				case 98 : map_list[i*col+j] = '8'; break;
-				case 99 : map_list[i*col+j] = '9'; break;
+				case 8 : map_list[i*col+j] = '8'; break;
+				case 9 : map_list[i*col+j] = '9'; break;
 			}
 		}
 
@@ -133,8 +131,8 @@ void Snake::initGate(int map[40][50]) { //gate설정
 	if(randWall == randWall2) initGate(map); //추출한 두 랜덤 값이 같으면 다시 호출
 	gate[0] = wall[randWall]; //벡터에 대입
 	gate[1] = wall[randWall2];
-	map[gate[0].getY()][gate[0].getX()] = 98; //map표시를 위해 바꾸어줌
-	map[gate[1].getY()][gate[1].getX()] = 99;
+	map[gate[0].getY()][gate[0].getX()] = 8; //map표시를 위해 바꾸어줌
+	map[gate[1].getY()][gate[1].getX()] = 9;
 }
 
 
