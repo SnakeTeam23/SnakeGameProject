@@ -12,38 +12,37 @@ int Point::getX() const {return this->x;}
 int Point::getY() const {return this->y;}
 
 //operator overloading
-Point& Point::operator=(const Point& v){
-	setX(v.getX());
-	setY(v.getY());
+Point& Point::operator=(const Point& p){
+	setX(p.getX());
+	setY(p.getY());
 	return *this;
 }
 
-Point& Point::operator+=(const Point& v){
-	setX(getX() + v.getX());
-	setY(getY() + v.getY());
+Point& Point::operator+=(const Point& p){
+	setX(getX() + p.getX());
+	setY(getY() + p.getY());
 	return *this;
 }
 
-Point Point::operator+(const Point& v){
+Point Point::operator+(const Point& p){
 	Point v2(getX(), getY());
-	return v2 += v;
+	return v2 += p;
+}
+Point Point::operator-(const Point& p){
+	Point v2(getX(), getY());
+	return v2 -= p;
 }
 
-Point& Point::operator-=(const Point& v){
-	setX(getX() - v.getX());
-	setY(getY() - v.getY());
+Point& Point::operator-=(const Point& p){
+	setX(getX() - p.getX());
+	setY(getY() - p.getY());
 	return *this;
 }
 
-Point Point::operator-(const Point& v){
-	Point v2(getX(), getY());
-	return v2 -= v;
+bool Point::operator==(const Point& p){
+	return getX() == p.getX() && getY() == p.getY();
 }
 
-bool Point::operator==(const Point& v){
-	return getX() == v.getX() && getY() == v.getY();
-}
-
-bool Point::operator!=(const Point& v){
-	return !operator == (v);
+bool Point::operator!=(const Point& p){
+	return !operator == (p);
 }

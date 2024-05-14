@@ -17,11 +17,11 @@ public:
 	int getX() const;
 	int getY() const;
 
-	Point& operator=(const Point& v);
-	Point& operator+=(const Point& v);
-	Point operator+(const Point& v);
-	Point& operator-=(const Point& v);
-	Point operator-(const Point& v);
-	bool operator==(const Point& v);
-	bool operator!=(const Point& v);
+	Point& operator=(const Point& p);
+	Point& operator+=(const Point& p);
+	Point operator+(const Point& p);
+	Point& operator-=(const Point& p);
+	Point operator-(const Point& p);
+	bool operator==(const Point& p);
+	bool operator!=(const Point& p);
 };
