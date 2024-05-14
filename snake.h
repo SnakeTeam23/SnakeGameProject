@@ -52,4 +52,6 @@ public:
 	position plus_head();
 	void resize(int new_size);
 	void change_snake_length();
+
+	void checkVisitWall(bool gateNum, int map[40][50]);
 };

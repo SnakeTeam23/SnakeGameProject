@@ -53,18 +53,12 @@ void Snake::move_snake_head(int map[40][50]){ //스네이크를 설정한 방향
 	for(int i=0; i<wall.size(); i++) { //벽의 벡터만큼 for문
 		if(snake_vec[0] == wall[i]) { //벽일경우
 			if(snake_vec[0] == gate[1]) { //gate[1]과만나면
-				snake_vec[0].setX(gate[0].getX()); //snake의 head부분을 gate[0]위치로 변경
-				snake_vec[0].setY(gate[0].getY());
-				setDirection(gateDirection(gate[0], map)); //snake의 head 의 방향 바꾸어줌
-				set_gate_pass_cnt(1);
+				checkVisitWall(0, map);
 				break;
 			}
 
 			else if(snake_vec[0] == gate[0]) { //gate[0]과 만나면
-				snake_vec[0].setX(gate[1].getX());
-				snake_vec[0].setY(gate[1].getY());
-				setDirection(gateDirection(gate[1], map));
-				set_gate_pass_cnt(1);
+				checkVisitWall(1, map);
 				break;
 			}
 
@@ -74,6 +68,13 @@ void Snake::move_snake_head(int map[40][50]){ //스네이크를 설정한 방향
 			}
 		}
 	}
+}
+
+void Snake::checkVisitWall(bool gateNum, int map[40][50]){
+	snake_vec[0].setX(gate[gateNum].getX()); //snake의 head부분을 gate[0]위치로 변경
+	snake_vec[0].setY(gate[gateNum].getY());
+	setDirection(gateDirection(gate[gateNum], map)); //snake의 head 의 방향 바꾸어줌
+	set_gate_pass_cnt(1);
 }
 
 
