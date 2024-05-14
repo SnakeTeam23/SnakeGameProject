@@ -94,8 +94,8 @@ char* Snake::change_List(int map[40][50]){ //2차원배열을 리스트로 변�
 				case 3 : map_list[i*col+j] = '3'; break;
 				case 4 : map_list[i*col+j] = '4'; break;
 				case 6 : map_list[i*col+j] = '6'; break;
-				case 98 : map_list[i*col+j] = '8'; break;
-				case 99 : map_list[i*col+j] = '9'; break;
+				case 8 : map_list[i*col+j] = '8'; break;
+				case 9 : map_list[i*col+j] = '9'; break;
 			}
 		}
 
@@ -131,8 +131,8 @@ void Snake::initGate(int map[40][50]) { //gate설정
 	if(randWall == randWall2) initGate(map); //추출한 두 랜덤 값이 같으면 다시 호출
 	gate[0] = wall[randWall]; //벡터에 대입
 	gate[1] = wall[randWall2];
-	map[gate[0].getY()][gate[0].getX()] = 98; //map표시를 위해 바꾸어줌
-	map[gate[1].getY()][gate[1].getX()] = 99;
+	map[gate[0].getY()][gate[0].getX()] = 8; //map표시를 위해 바꾸어줌
+	map[gate[1].getY()][gate[1].getX()] = 9;
 }
 
 
