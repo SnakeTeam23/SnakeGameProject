@@ -28,7 +28,8 @@ void updateNerf(int stage){
 void makeNerf(int stage, WINDOW *win1){
     nodelay(win1, true);    
     while(1){
-        if(map[stage][buff_position.randomPosition().y][buff_position.randomPosition().x] != 0){
+        position temp_position = buff_position.randomPosition();
+        if(map[stage][temp_position.y][temp_position.x] != 0){
             buff_position.randomPosition();
         }
         else break;
@@ -40,7 +41,8 @@ void makeNerf(int stage, WINDOW *win1){
 void makeBuff(int stage, WINDOW *win1){ 
     nodelay(win1, true);
     while(1){
-        if(map[stage][nerf_position.randomPosition().y][nerf_position.randomPosition().x] != 0){
+        position temp_position = nerf_position.randomPosition();
+        if(map[stage][temp_position.y][temp_position.x] != 0){
             nerf_position.randomPosition();
         }
         else break;
@@ -48,6 +50,7 @@ void makeBuff(int stage, WINDOW *win1){
     vpoison_item.push_back(nerf_position);
     updateNerf(stage);
 }
+
 
 void removeBuff(int stage, WINDOW *win1){ //추가 아이템 숨기기
     nodelay(win1, true);
