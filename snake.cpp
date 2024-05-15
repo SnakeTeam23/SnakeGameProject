@@ -16,7 +16,7 @@ Snake::Snake(int r, int c) : row(r), col(c){
 		end = false;
 		speed = 150000;
 		map_list = new char[row*col];
-		level=4;
+		level=1;
 		snakeLen=3;
 		set_gate_pass_cnt(0);
 	}
@@ -35,9 +35,24 @@ void Snake::setDirection(int d){ //스네이크의 방향을 설정하는 함수
 }
 
 int Snake::gateDirection(Point gate, int map[40][50]){ //게이트에 따라 뭔가를 설정
+	int i = 0;
+	switch(getDirection()){
+		case 'u':
+			i = 0;
+			break;
+		case 'r':
+			i = 1;
+			break;
+		case 'd':
+			i = 2;
+			break;
+		case 'l':
+			i = 3;
+			break;
+	}
 	Point points[4] = {Point(0, -1), Point(1, 0), Point(0, 1), Point(-1, 0)};
 	Point A(0, 0);
-	for(int i = 0; i < 4; i++){
+	for(; i < 4; i = (i + 1) % 4){
 		A = gate + points[i];
 		if(map[A.getY()][A.getX()] == 0) return i;
 	}
@@ -129,9 +144,10 @@ void Snake::initGate(int map[40][50]) { //gate설정
 	int randWall = rand() % wall.size(); //랜덤함수 추출
 	int randWall2 = rand() % wall.size();
 	if(randWall == randWall2) initGate(map); //추출한 두 랜덤 값이 같으면 다시 호출
-	gate[0] = wall[randWall]; //벡터에 대입
-	// gate[0] = Point(32, 8);
-	gate[1] = wall[randWall2];
+	// gate[0] = wall[randWall]; //벡터에 대입
+	gate[0] = Point(32, 8);
+	// gate[1] = wall[randWall2];
+	gate[1] = Point(48, 3);
 	map[gate[0].getY()][gate[0].getX()] = 8; //map표시를 위해 바꾸어줌
 	map[gate[1].getY()][gate[1].getX()] = 9;
 }
