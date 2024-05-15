@@ -16,7 +16,7 @@ Snake::Snake(int r, int c) : row(r), col(c){
 		end = false;
 		speed = 150000;
 		map_list = new char[row*col];
-		level=1;
+		level=4;
 		snakeLen=3;
 		set_gate_pass_cnt(0);
 	}
@@ -130,6 +130,7 @@ void Snake::initGate(int map[40][50]) { //gate설정
 	int randWall2 = rand() % wall.size();
 	if(randWall == randWall2) initGate(map); //추출한 두 랜덤 값이 같으면 다시 호출
 	gate[0] = wall[randWall]; //벡터에 대입
+	// gate[0] = Point(32, 8);
 	gate[1] = wall[randWall2];
 	map[gate[0].getY()][gate[0].getX()] = 8; //map표시를 위해 바꾸어줌
 	map[gate[1].getY()][gate[1].getX()] = 9;
