@@ -197,7 +197,12 @@ position Snake::plus_head(){ //머리 position 타입으로 바꿔주기
 }
 
 void Snake::resize(int new_size){
-	snake_vec.resize(new_size);
+    std::vector<Point> newVector;
+    newVector.push_back(snake_vec[0]);
+    newVector.push_back(snake_vec[1]);
+    newVector.push_back(snake_vec[2]);
+
+    snake_vec = newVector;
 }
 
 void Snake::change_snake_length(){snakeLen = snake_vec.size();}
