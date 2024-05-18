@@ -21,23 +21,6 @@ Snake::Snake(int r, int c) : row(r), col(c){
 		set_gate_pass_cnt(0);
 	}
 
-bool isValidSpawn(int x, int y, int map[40][50], int min_distance) {
-    for (int i = max(0, x - min_distance); i <= min(39, x + min_distance); i++) {
-        for (int j = max(0, y - min_distance); j <= min(49, y + min_distance); j++) {
-            if (map[j][i] != 0) { 
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-void generateValidSpawnPosition(int &x, int &y, int map[40][50], int min_distance) {
-    do {
-        x = rand() % 40; 
-        y = rand() % 50; 
-    } while (!isValidSpawn(x, y, map, min_distance));
-}
 
 //소멸자
 Snake::~Snake(){ delete [] map_list; }
