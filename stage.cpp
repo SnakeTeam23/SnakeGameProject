@@ -10,6 +10,7 @@
 #include <unistd.h>
 using namespace std;
 
+int mapCnt = 0;
 int buffCnt = 0;
 int nerfCnt = 0;
 
@@ -201,6 +202,7 @@ void setMission(Snake& snake, WINDOW *win1){
 
 void nextLevel(Snake& snake,WINDOW *win1){
 	if((missionBody == 'O')&&(missionGate=='O')&&(missionBuff=='O')&&(missionNerf=='O')){
+		mapCnt = 0;
 		buffCnt = 0;
 		nerfCnt = 0;
 		snake.resize(3);
@@ -241,7 +243,6 @@ void game() {
 	wrefresh(scoreBoard);
 
 	Snake snake(40, 50);
-	int mapCnt = 0;
 
 	while(!snake.isEnd()){ //exit가 true가 될때까지 반복문
 		WINDOW *win1 = newwin(40, 50, 0, 0);
