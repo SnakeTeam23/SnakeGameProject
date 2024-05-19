@@ -10,6 +10,10 @@
 #include <unistd.h>
 using namespace std;
 
+int mapCnt = 0;
+int buffCnt = 0;
+int nerfCnt = 0;
+
 extern int map[4][40][50];
 extern int map[4][40][50];
 extern void makeBuff(int stage, WINDOW *win1);
@@ -24,10 +28,10 @@ char missionBuff = 'X';
 char missionNerf = 'X';
 char missionGate = 'X';
 
-#define MISSION_BODY_LENGTH 8
-#define MISSION_GROWTH_CNT 4
-#define MISSION_POISON_CNT 2
-#define MISSION_GATE_CNT 2
+#define MISSION_BODY_LENGTH 4
+#define MISSION_GROWTH_CNT 1
+#define MISSION_POISON_CNT 1
+#define MISSION_GATE_CNT 1
 
 // 함수 원형 선언
 void start_game(float, float);
@@ -198,6 +202,9 @@ void setMission(Snake& snake, WINDOW *win1){
 
 void nextLevel(Snake& snake,WINDOW *win1){
 	if((missionBody == 'O')&&(missionGate=='O')&&(missionBuff=='O')&&(missionNerf=='O')){
+		mapCnt = 0;
+		buffCnt = 0;
+		nerfCnt = 0;
 		snake.resize(3);
 		snake.apple =0;
 		snake.poison =0;
@@ -236,9 +243,6 @@ void game() {
 	wrefresh(scoreBoard);
 
 	Snake snake(40, 50);
-	int mapCnt = 0;
-	int buffCnt = 0;
-	int nerfCnt = 0;
 
 	while(!snake.isEnd()){ //exit가 true가 될때까지 반복문
 		WINDOW *win1 = newwin(40, 50, 0, 0);
