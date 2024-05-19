@@ -1,27 +1,25 @@
-#include <iostream>
-#include <vector>
 using namespace std;
 
 class Point{
-protected:
+private:
 	int x,y;
 
 public:
-    //생성자
-	Point();
-	Point(int x, int y);
 
-    //setter, getter
-	void setX(int x);
-	void setY(int y);
-	int getX() const;
-	int getY() const;
-
-	Point& operator=(const Point& p);
 	Point& operator+=(const Point& p);
 	Point operator+(const Point& p);
 	Point& operator-=(const Point& p);
+	Point& operator=(const Point& p);
 	Point operator-(const Point& p);
 	bool operator==(const Point& p);
 	bool operator!=(const Point& p);
+
+	void set_x(int x);
+	void set_y(int y);
+	int get_x() const;
+	int get_y() const;
+
+	Point();
+	Point(int x, int y);
+	~Point();
 };

@@ -54,7 +54,7 @@ int Snake::gateDirection(Point gate, int map[40][50]){ //게이트에 따라 뭔
 	Point A(0, 0);
 	for(; i < 4; i = (i + 1) % 4){
 		A = gate + points[i];
-		if(map[A.getY()][A.getX()] == 0) return i;
+		if(map[A.get_y()][A.get_x()] == 0) return i;
 	}
 	return -1;
 }
@@ -83,8 +83,8 @@ void Snake::move_snake_head(int map[40][50]){ //스네이크를 설정한 방향
 }
 
 void Snake::checkVisitWall(bool gateNum, int map[40][50]){
-	snake_vec[0].setX(gate[gateNum].getX()); //snake의 head부분을 gate[0]위치로 변경
-	snake_vec[0].setY(gate[gateNum].getY());
+	snake_vec[0].set_x(gate[gateNum].get_x()); //snake의 head부분을 gate[0]위치로 변경
+	snake_vec[0].set_y(gate[gateNum].get_y());
 	setDirection(gateDirection(gate[gateNum], map)); //snake의 head 의 방향 바꾸어줌
 	set_gate_pass_cnt(1);
 }
@@ -115,17 +115,17 @@ char* Snake::change_List(int map[40][50]){ //2차원배열을 리스트로 변�
 		}
 
 	}
-	map_list[snake_vec[0].getY()*col+snake_vec[0].getX()] = 'h'; //snake head의 위치 설정
+	map_list[snake_vec[0].get_y()*col+snake_vec[0].get_x()] = 'h'; //snake head의 위치 설정
 	for(unsigned int i=1; i<snake_vec.size(); ++i)
-		map_list[snake_vec[i].getY()*col+snake_vec[i].getX()] = 'b'; //snake body의 위치 설정
+		map_list[snake_vec[i].get_y()*col+snake_vec[i].get_x()] = 'b'; //snake body의 위치 설정
 	return map_list;
 }
 
 
 char Snake::getDirection() { //방향 설정
-	if(direction.getX()==1) return 'r'; //오른쪽
-	else if(direction.getX()==-1) return 'l'; //왼쪽
-	else if(direction.getY()==-1) return 'u'; //윗쪽
+	if(direction.get_x()==1) return 'r'; //오른쪽
+	else if(direction.get_x()==-1) return 'l'; //왼쪽
+	else if(direction.get_y()==-1) return 'u'; //윗쪽
 	else return 'd'; //아랫쪽
 }
 
@@ -148,19 +148,19 @@ void Snake::initGate(int map[40][50]) { //gate설정
 	// gate[0] = Point(32, 8);
 	gate[1] = wall[randWall2];
 	// gate[1] = Point(48, 3);
-	map[gate[0].getY()][gate[0].getX()] = 8; //map표시를 위해 바꾸어줌
-	map[gate[1].getY()][gate[1].getX()] = 9;
+	map[gate[0].get_y()][gate[0].get_x()] = 8; //map표시를 위해 바꾸어줌
+	map[gate[1].get_y()][gate[1].get_x()] = 9;
 }
 
 
 void Snake::remove_gate(int map[40][50])
 {
-	map[gate[0].getY()][gate[0].getX()] = 1; //전 gate의 map 다시 바꾸어줌
-	map[gate[1].getY()][gate[1].getX()] = 1;
-	gate[0].setX(0);
-	gate[0].setY(0);
-	gate[1].setX(0);
-	gate[1].setY(0);
+	map[gate[0].get_y()][gate[0].get_x()] = 1; //전 gate의 map 다시 바꾸어줌
+	map[gate[1].get_y()][gate[1].get_x()] = 1;
+	gate[0].set_x(0);
+	gate[0].set_y(0);
+	gate[1].set_x(0);
+	gate[1].set_y(0);
 }
 
 void Snake::set_gate_pass_cnt(int i) {
@@ -192,7 +192,7 @@ void Snake::break_item(WINDOW *win1){
 }
 
 position Snake::plus_head(){ //머리 position 타입으로 바꿔주기
-	position head(snake_vec[0].getX(), snake_vec[0].getY());
+	position head(snake_vec[0].get_x(), snake_vec[0].get_y());
 	return head;
 }
 
