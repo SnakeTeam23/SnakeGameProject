@@ -37,6 +37,7 @@ public:
 	int getSpeed();
 	int getRow();
 	int getCol();
+	void randomSpawn(int map[40][50]);
 	
 	void initGate(int map[40][50]);
 	void remove_gate(int map[40][50]);

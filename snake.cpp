@@ -24,6 +24,48 @@ Snake::Snake(int r, int c) : row(r), col(c){
 //소멸자
 Snake::~Snake(){ delete [] map_list; }
 
+void Snake::randomSpawn(int map[40][50]){
+    bool validSpawn = false;
+    int maxIterations = 1656; 
+    int iterations = 0;
+    int spawnX, spawnY;
+
+    while (!validSpawn && iterations < maxIterations) {
+        spawnX = rand() % (col - 20) + 10;
+        spawnY = rand() % (row - 20) + 10;
+
+        if (map[spawnY][spawnX] == 0 && 
+            map[spawnY + 1][spawnX] == 0 && 
+            map[spawnY + 2][spawnX] == 0) {
+
+            validSpawn = true;
+            snake_vec.clear();
+            for (int i = 0; i < 3; i++) {
+                snake_vec.push_back(Point(spawnX, spawnY + i));
+            }
+        }
+        iterations++;
+    }
+
+    if (!validSpawn) {
+        for (iterations = 0; iterations < maxIterations; ++iterations) {
+            spawnX = rand() % (col - 10) + 5;
+            spawnY = rand() % (row - 10) + 5;
+
+            if (map[spawnY][spawnX] == 0 && 
+                map[spawnY + 1][spawnX] == 0 && 
+                map[spawnY + 2][spawnX] == 0) {
+                snake_vec.clear();
+                for (int i = 0; i < 3; i++) {
+                    snake_vec.push_back(Point(spawnX, spawnY + i));
+                }
+                return;
+            }
+        }
+    }
+}
+
+
 void Snake::setDirection(int d){ //스네이크의 방향을 설정하는 함수 구현
 	switch(d)
 	{

@@ -216,6 +216,7 @@ void nextLevel(Snake& snake,WINDOW *win1){
 		removeBuff(snake.get_level()-1,win1);
 		removeNerf(snake.get_level()-1,win1);
 		snake.set_level(snake.get_level()+1);
+		snake.randomSpawn(map[snake.get_level()]);
 		if (levelUpScreen(0,0, snake.get_level()) == 13) {}; //엔터 누르면 다음 레벨로 게임 계속 진행
 	}
 }
