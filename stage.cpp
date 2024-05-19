@@ -28,10 +28,10 @@ char missionBuff = 'X';
 char missionNerf = 'X';
 char missionGate = 'X';
 
-#define MISSION_BODY_LENGTH 4
-#define MISSION_GROWTH_CNT 1
-#define MISSION_POISON_CNT 1
-#define MISSION_GATE_CNT 1
+#define MISSION_BODY_LENGTH 8
+#define MISSION_GROWTH_CNT 4
+#define MISSION_POISON_CNT 2
+#define MISSION_GATE_CNT 2
 
 // 함수 원형 선언
 void start_game(float, float);
