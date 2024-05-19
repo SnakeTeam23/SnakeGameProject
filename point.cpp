@@ -39,7 +39,7 @@ bool Point::operator!=(const Point& p){
 }
 
 bool Point::operator==(const Point& p){
-	return get_x() == p.get_x() && get_y() == p.get_y();
+	return x == p.get_x() && y == p.get_y();
 }
 
 Point& Point::operator=(const Point& p){
