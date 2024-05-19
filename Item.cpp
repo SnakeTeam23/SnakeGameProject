@@ -29,13 +29,6 @@ void updateNerf(int stage){
 
 void makeNerf(int stage, WINDOW *win1){
     nodelay(win1, true);    
-    // while(true){
-    //     position temp_position = buff_position.randomPosition();
-    //     if(map[stage][temp_position.y][temp_position.x] != 0){
-    //         buff_position.randomPosition();
-    //     }
-    //     else break;
-    // }
     makeRandom(1, stage);
     vapple_item.push_back(buff_position);
     updateBuff(stage);
@@ -43,13 +36,6 @@ void makeNerf(int stage, WINDOW *win1){
 
 void makeBuff(int stage, WINDOW *win1){ 
     nodelay(win1, true);
-    // while(true){
-    //     position temp_position = nerf_position.randomPosition();
-    //     if(map[stage][temp_position.y][temp_position.x] != 0){
-    //         nerf_position.randomPosition();
-    //     }
-    //     else break;
-    // }
     makeRandom(2, stage);
     vpoison_item.push_back(nerf_position);
     updateNerf(stage);

@@ -242,8 +242,6 @@ void game() {
 
 	Snake snake(40, 50);
 	int mapCnt = 0;
-	// int buffCnt = 0;
-	// int nerfCnt = 0;
 
 	while(!snake.isEnd()){ //exit가 true가 될때까지 반복문
 		WINDOW *win1 = newwin(40, 50, 0, 0);
