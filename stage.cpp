@@ -267,31 +267,31 @@ void game() {
 		}
 		mapCnt+= 1;
 
-		if (mapCnt == 100) {
+		if (mapCnt >= 100 && !snake.isGate()) {
 			snake.remove_gate(map[snake.get_level()-1]);
 			updateMap(snake, map[snake.get_level()-1]);
 			mapCnt = 1;
 		}
 
 		if (buffCnt == 0) {
-			makeNerf(snake.get_level()-1,win1);
+			makeBuff(snake.get_level()-1,win1);
 		}
 		buffCnt+= 1;
 
 		if (buffCnt == 100) { // 10초에 한번씩 바뀝니다.
 			removeBuff(snake.get_level()-1,win1);
-			makeNerf(snake.get_level()-1,win1);
+			makeBuff(snake.get_level()-1,win1);
 			buffCnt = 1;
 		}
 
 		if (nerfCnt == 0) {
-			makeBuff(snake.get_level()-1,win1);
+			makeNerf(snake.get_level()-1,win1);
 		}
 		nerfCnt+= 1;
 
 		if (nerfCnt == 70) { // 7초에 한번씩 바뀝니다.
 			removeNerf(snake.get_level()-1,win1);
-			makeBuff(snake.get_level()-1,win1);
+			makeNerf(snake.get_level()-1,win1);
 			nerfCnt = 1;
 		}
 

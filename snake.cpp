@@ -224,13 +224,13 @@ void Snake::set_level(int new_level){
 void Snake::decrease_snake(WINDOW *win1){
 	removeNerf(level-1,win1);
 	snake_vec.pop_back();
-	makeBuff(level-1,win1);
+	makeNerf(level-1,win1);
 }
 
 void Snake::break_item(WINDOW *win1){
 	removeBuff(level -1,win1);
 	snake_vec.push_back(snake_vec.back());
-	makeNerf(level-1,win1);
+	makeBuff(level-1,win1);
 }
 
 position Snake::plus_head(){ //머리 position 타입으로 바꿔주기
@@ -248,3 +248,11 @@ void Snake::resize(int new_size){
 }
 
 void Snake::change_snake_length(){snakeLen = snake_vec.size();}
+
+bool Snake::isGate(){
+	int data = 0;
+	for(int i = 0; i < snake_vec.size(); i++){
+		if(snake_vec[i] == gate[0] || snake_vec[i] == gate[1]) return true;
+	}
+	return false;
+}

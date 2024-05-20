@@ -55,4 +55,5 @@ public:
 	void change_snake_length();
 
 	void checkVisitWall(bool gateNum, int map[40][50]);
+	bool isGate();
 };
