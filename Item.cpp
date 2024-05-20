@@ -28,17 +28,17 @@ void updateNerf(int stage){
 }
 
 void makeNerf(int stage, WINDOW *win1){
-    nodelay(win1, true);    
-    makeRandom(1, stage);
-    vapple_item.push_back(buff_position);
-    updateBuff(stage);
-}
-
-void makeBuff(int stage, WINDOW *win1){ 
     nodelay(win1, true);
     makeRandom(2, stage);
     vpoison_item.push_back(nerf_position);
     updateNerf(stage);
+}
+
+void makeBuff(int stage, WINDOW *win1){ 
+    nodelay(win1, true);    
+    makeRandom(1, stage);
+    vapple_item.push_back(buff_position);
+    updateBuff(stage);
 }
 
 

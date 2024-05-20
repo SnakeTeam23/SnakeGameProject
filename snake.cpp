@@ -224,13 +224,13 @@ void Snake::set_level(int new_level){
 void Snake::decrease_snake(WINDOW *win1){
 	removeNerf(level-1,win1);
 	snake_vec.pop_back();
-	makeBuff(level-1,win1);
+	makeNerf(level-1,win1);
 }
 
 void Snake::break_item(WINDOW *win1){
 	removeBuff(level -1,win1);
 	snake_vec.push_back(snake_vec.back());
-	makeNerf(level-1,win1);
+	makeBuff(level-1,win1);
 }
 
 position Snake::plus_head(){ //머리 position 타입으로 바꿔주기
