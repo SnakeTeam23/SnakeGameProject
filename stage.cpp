@@ -267,7 +267,7 @@ void game() {
 		}
 		mapCnt+= 1;
 
-		if (mapCnt == 100) {
+		if (mapCnt >= 50 && !snake.isGate()) {
 			snake.remove_gate(map[snake.get_level()-1]);
 			updateMap(snake, map[snake.get_level()-1]);
 			mapCnt = 1;

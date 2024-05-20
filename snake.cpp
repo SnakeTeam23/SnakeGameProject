@@ -10,7 +10,7 @@ extern void removeNerf(int stage, WINDOW *win1);
 extern WINDOW *win1;
 
 Snake::Snake(int r, int c) : row(r), col(c){
-		for(int i=0; i<3; i++)
+		for(int i=0; i<10; i++)
 			snake_vec.push_back(Point(col/2, row/2+i));
 		setDirection(0);
 		end = false;
@@ -248,3 +248,11 @@ void Snake::resize(int new_size){
 }
 
 void Snake::change_snake_length(){snakeLen = snake_vec.size();}
+
+bool Snake::isGate(){
+	int data = 0;
+	for(int i = 0; i < snake_vec.size(); i++){
+		if(snake_vec[i] == gate[0] || snake_vec[i] == gate[1]) return true;
+	}
+	return false;
+}
