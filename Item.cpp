@@ -12,8 +12,13 @@ extern WINDOW *win1;
 
 vector<position> vapple_item;
 vector<position> vpoison_item;
+vector<position> vmReset_item;
 position buff_position(0,0);
 position nerf_position(0,0);
+position mReset_position(0,0);
+
+bool mReset_item_spawned = false;
+bool mReset_item_eaten = false;
 
 void createRandom(int mode, int stage);
 
@@ -25,6 +30,11 @@ void updateBuff(int stage){
 void updateNerf(int stage){
     nerf_position = vpoison_item.back();
     map[stage][nerf_position.y][nerf_position.x] = 6;
+}
+
+void updateMreset(int stage) {
+    mReset_position = vmReset_item.back();
+    map[stage][mReset_position.y][mReset_position.x] = 7;
 }
 
 void createNerf(int stage, WINDOW *win1){
@@ -39,6 +49,13 @@ void createBuff(int stage, WINDOW *win1){
     createRandom(1, stage);
     vapple_item.push_back(buff_position);
     updateBuff(stage);
+}
+
+void createMreset(int stage, WINDOW *win1) {
+    nodelay(win1, true);
+    createRandom(3, stage);  
+    vmReset_item.push_back(mReset_position);
+    map[stage][mReset_position.y][mReset_position.x] = 7;  
 }
 
 
@@ -60,14 +77,32 @@ void removeNerf(int stage, WINDOW *win1){//독 없애기
     }
 }
 
+void removeMreset(int stage, WINDOW *win1) {//미션리셋아이템 없애기
+    nodelay(win1, true);
+    if (!vmReset_item.empty()) {
+        mReset_position = vmReset_item.back();
+        map[stage][mReset_position.y][mReset_position.x] = 0;
+        vmReset_item.pop_back();
+    }
+}
+
+
+
 void createRandom(int mode, int stage){
-    // mode 1: 버프, mode 2: 너프
-    position* buffOrNerf = (mode == 1) ? &buff_position : &nerf_position;
-    while(true){
-        position temp_position = (*buffOrNerf).randomPosition();
-        if(map[stage][temp_position.y][temp_position.x] != 0){
-            (*buffOrNerf).randomPosition();
+    position* item_position = nullptr;
+    switch (mode) {
+        case 1: item_position = &buff_position; break;
+        case 2: item_position = &nerf_position; break;
+        case 3: item_position = &mReset_position; break;
+    }
+    
+    while (true) {
+        position temp_position = item_position->randomPosition();
+        if (map[stage][temp_position.y][temp_position.x] != 0) {
+            item_position->randomPosition();
+        } else {
+            *item_position = temp_position;
+            break;
         }
-        else break;
     }
 }

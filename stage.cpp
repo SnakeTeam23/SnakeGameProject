@@ -13,15 +13,24 @@ using namespace std;
 int mapCnt = 0;
 int buffCnt = 0;
 int nerfCnt = 0;
+int mResetCnt = 0;
+int mResetDuration = 0;
+
 
 extern int map[4][40][50];
 extern int map[4][40][50];
 extern void createBuff(int stage, WINDOW *win1);
 extern void createNerf(int stage, WINDOW *win1);
+extern void createMreset(int stage, WINDOW *win1);
 extern void removeNerf(int stage, WINDOW *win1);
 extern void removeBuff(int stage, WINDOW *win1);
+extern void removeMreset(int stage, WINDOW *win1);
+extern bool mReset_item_eaten;
+extern bool mReset_item_spawned;
+
 extern vector<position> vpoison_item;
 extern vector<position> vapple_item;
+extern vector<position> vmReset_item;
 
 char missionBody = 'X';
 char missionBuff = 'X';
@@ -117,6 +126,8 @@ void drawMap(WINDOW* win, Snake& snake, char* table, int row, int col)
                 case '6': //nerf
                     ch = 'X';
                     break;
+				case '7': //mReset
+				    ch = 'R';
 			}
 			mvwaddch(win, y, x, ch);
 		}
@@ -293,6 +304,35 @@ void game() {
 			removeNerf(snake.get_level()-1,win1);
 			createNerf(snake.get_level()-1,win1);
 			nerfCnt = 1;
+		}
+
+		if (mResetCnt == 0 && !mReset_item_spawned && !mReset_item_eaten) {
+            createMreset(snake.get_level() - 1, win1);
+            mReset_item_spawned = true;
+            mResetDuration = 0;
+        }
+        mResetCnt++;
+        mResetDuration++;
+
+        if (mResetDuration >= 1000) {  // 10초 경과
+            removeMreset(snake.get_level() - 1, win1);
+            mReset_item_spawned = false;
+            mResetCnt = 0;
+        }
+
+        position head = snake.plus_head();
+        if (!vmReset_item.empty() && head == vmReset_item.back()) {
+            // 미션 아이템 먹음
+            missionBody = 'X'; 
+		    missionBuff = 'X';
+		    missionNerf = 'X';
+		    missionGate = 'X'; // 이 함수는 미션 진행 상황을 초기화
+			snake.resize(3);
+		    snake.apple =0;
+		    snake.poison =0;
+		    snake.set_gate_pass_cnt(0);
+            mReset_item_eaten = true;
+            removeMreset(snake.get_level() - 1, win1);
 		}
 
 		int input = wgetch(win1);
