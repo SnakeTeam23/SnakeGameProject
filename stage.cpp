@@ -25,8 +25,7 @@ extern void createMreset(int stage, WINDOW *win1);
 extern void removeNerf(int stage, WINDOW *win1);
 extern void removeBuff(int stage, WINDOW *win1);
 extern void removeMreset(int stage, WINDOW *win1);
-extern bool mReset_item_eaten;
-extern bool mReset_item_spawned;
+
 
 extern vector<position> vpoison_item;
 extern vector<position> vapple_item;
@@ -36,9 +35,10 @@ char missionBody = 'X';
 char missionBuff = 'X';
 char missionNerf = 'X';
 char missionGate = 'X';
+bool mReset_spawnded = false;
 
 #define MISSION_BODY_LENGTH 8
-#define MISSION_GROWTH_CNT 4
+#define MISSION_GROWTH_CNT 1
 #define MISSION_POISON_CNT 2
 #define MISSION_GATE_CNT 2
 
@@ -126,8 +126,9 @@ void drawMap(WINDOW* win, Snake& snake, char* table, int row, int col)
                 case '6': //nerf
                     ch = 'X';
                     break;
-				case '7': //mReset
-				    ch = 'R';
+				case '5': //mReset
+				    ch = '7';
+					break;
 			}
 			mvwaddch(win, y, x, ch);
 		}
@@ -216,6 +217,8 @@ void nextLevel(Snake& snake,WINDOW *win1){
 		mapCnt = 0;
 		buffCnt = 0;
 		nerfCnt = 0;
+		mResetDuration =0;
+		mReset_spawnded = false;
 		snake.resize(3);
 		snake.apple =0;
 		snake.poison =0;
@@ -305,19 +308,26 @@ void game() {
 			createNerf(snake.get_level()-1,win1);
 			nerfCnt = 1;
 		}
+		if((missionBody == 'O')||(missionGate=='O')||(missionBuff=='O')||(missionNerf=='O')){
+			mResetDuration = 1;
+		}
 
-		if (mResetCnt == 0 && !mReset_item_spawned && !mReset_item_eaten) {
+
+		if (mResetDuration !=0 && !mReset_spawnded) {
             createMreset(snake.get_level() - 1, win1);
-            mReset_item_spawned = true;
-            mResetDuration = 0;
+            mResetCnt = 1;
+			mResetDuration = 2;
+			mReset_spawnded = true;
         }
-        mResetCnt++;
-        mResetDuration++;
 
-        if (mResetDuration >= 1000) {  // 10초 경과
+		if(mReset_spawnded){
+			mResetCnt+= 1;
+		}
+
+        if (mResetCnt == 100) {  // 10초 경과
             removeMreset(snake.get_level() - 1, win1);
-            mReset_item_spawned = false;
             mResetCnt = 0;
+			mResetDuration =3;			
         }
 
         position head = snake.plus_head();
@@ -326,13 +336,14 @@ void game() {
             missionBody = 'X'; 
 		    missionBuff = 'X';
 		    missionNerf = 'X';
-		    missionGate = 'X'; // 이 함수는 미션 진행 상황을 초기화
+		    missionGate = 'X'; 
 			snake.resize(3);
 		    snake.apple =0;
 		    snake.poison =0;
 		    snake.set_gate_pass_cnt(0);
-            mReset_item_eaten = true;
             removeMreset(snake.get_level() - 1, win1);
+			mResetCnt = 0;
+			mResetDuration =4;
 		}
 
 		int input = wgetch(win1);
