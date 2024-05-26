@@ -2,8 +2,8 @@
 using namespace std;
 
 extern int map[4][40][50];
-extern void makeNerf(int stage, WINDOW *win1);
-extern void makeBuff(int stage, WINDOW *win1);
+extern void createNerf(int stage, WINDOW *win1);
+extern void createBuff(int stage, WINDOW *win1);
 extern void removeBuff(int stage, WINDOW *win1);
 extern void removeNerf(int stage, WINDOW *win1);
 
@@ -224,13 +224,13 @@ void Snake::set_level(int new_level){
 void Snake::decrease_snake(WINDOW *win1){
 	removeNerf(level-1,win1);
 	snake_vec.pop_back();
-	makeNerf(level-1,win1);
+	createNerf(level-1,win1);
 }
 
 void Snake::break_item(WINDOW *win1){
 	removeBuff(level -1,win1);
 	snake_vec.push_back(snake_vec.back());
-	makeBuff(level-1,win1);
+	createBuff(level-1,win1);
 }
 
 position Snake::plus_head(){ //머리 position 타입으로 바꿔주기

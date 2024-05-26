@@ -15,7 +15,7 @@ vector<position> vpoison_item;
 position buff_position(0,0);
 position nerf_position(0,0);
 
-void makeRandom(int mode, int stage);
+void createRandom(int mode, int stage);
 
 void updateBuff(int stage){ 
     buff_position = vapple_item.back();
@@ -27,16 +27,16 @@ void updateNerf(int stage){
     map[stage][nerf_position.y][nerf_position.x] = 6;
 }
 
-void makeNerf(int stage, WINDOW *win1){
+void createNerf(int stage, WINDOW *win1){
     nodelay(win1, true);
-    makeRandom(2, stage);
+    createRandom(2, stage);
     vpoison_item.push_back(nerf_position);
     updateNerf(stage);
 }
 
-void makeBuff(int stage, WINDOW *win1){ 
+void createBuff(int stage, WINDOW *win1){ 
     nodelay(win1, true);    
-    makeRandom(1, stage);
+    createRandom(1, stage);
     vapple_item.push_back(buff_position);
     updateBuff(stage);
 }
@@ -60,7 +60,7 @@ void removeNerf(int stage, WINDOW *win1){//독 없애기
     }
 }
 
-void makeRandom(int mode, int stage){
+void createRandom(int mode, int stage){
     // mode 1: 버프, mode 2: 너프
     position* buffOrNerf = (mode == 1) ? &buff_position : &nerf_position;
     while(true){
