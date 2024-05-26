@@ -17,7 +17,7 @@ int nerfCnt = 0;
 extern int map[4][40][50];
 extern int map[4][40][50];
 extern void makeBuff(int stage, WINDOW *win1);
-extern void makeNerf(int stage, WINDOW *win1);
+extern void createNerf(int stage, WINDOW *win1);
 extern void removeNerf(int stage, WINDOW *win1);
 extern void removeBuff(int stage, WINDOW *win1);
 extern vector<position> vpoison_item;
@@ -285,13 +285,13 @@ void game() {
 		}
 
 		if (nerfCnt == 0) {
-			makeNerf(snake.get_level()-1,win1);
+			createNerf(snake.get_level()-1,win1);
 		}
 		nerfCnt+= 1;
 
 		if (nerfCnt == 70) { // 7초에 한번씩 바뀝니다.
 			removeNerf(snake.get_level()-1,win1);
-			makeNerf(snake.get_level()-1,win1);
+			createNerf(snake.get_level()-1,win1);
 			nerfCnt = 1;
 		}
 

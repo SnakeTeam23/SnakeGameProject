@@ -27,7 +27,7 @@ void updateNerf(int stage){
     map[stage][nerf_position.y][nerf_position.x] = 6;
 }
 
-void makeNerf(int stage, WINDOW *win1){
+void createNerf(int stage, WINDOW *win1){
     nodelay(win1, true);
     makeRandom(2, stage);
     vpoison_item.push_back(nerf_position);
