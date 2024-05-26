@@ -34,7 +34,7 @@ void createNerf(int stage, WINDOW *win1){
     updateNerf(stage);
 }
 
-void makeBuff(int stage, WINDOW *win1){ 
+void createBuff(int stage, WINDOW *win1){ 
     nodelay(win1, true);    
     makeRandom(1, stage);
     vapple_item.push_back(buff_position);

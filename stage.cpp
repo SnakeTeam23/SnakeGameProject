@@ -16,7 +16,7 @@ int nerfCnt = 0;
 
 extern int map[4][40][50];
 extern int map[4][40][50];
-extern void makeBuff(int stage, WINDOW *win1);
+extern void createBuff(int stage, WINDOW *win1);
 extern void createNerf(int stage, WINDOW *win1);
 extern void removeNerf(int stage, WINDOW *win1);
 extern void removeBuff(int stage, WINDOW *win1);
@@ -274,13 +274,13 @@ void game() {
 		}
 
 		if (buffCnt == 0) {
-			makeBuff(snake.get_level()-1,win1);
+			createBuff(snake.get_level()-1,win1);
 		}
 		buffCnt+= 1;
 
 		if (buffCnt == 100) { // 10초에 한번씩 바뀝니다.
 			removeBuff(snake.get_level()-1,win1);
-			makeBuff(snake.get_level()-1,win1);
+			createBuff(snake.get_level()-1,win1);
 			buffCnt = 1;
 		}
 
