@@ -17,9 +17,6 @@ position buff_position(0,0);
 position nerf_position(0,0);
 position mReset_position(0,0);
 
-bool mReset_item_spawned = false;
-bool mReset_item_eaten = false;
-
 void createRandom(int mode, int stage);
 
 void updateBuff(int stage){ 
@@ -34,7 +31,7 @@ void updateNerf(int stage){
 
 void updateMreset(int stage) {
     mReset_position = vmReset_item.back();
-    map[stage][mReset_position.y][mReset_position.x] = 7;
+    map[stage][mReset_position.y][mReset_position.x] = 5;
 }
 
 void createNerf(int stage, WINDOW *win1){
@@ -55,7 +52,9 @@ void createMreset(int stage, WINDOW *win1) {
     nodelay(win1, true);
     createRandom(3, stage);  
     vmReset_item.push_back(mReset_position);
-    map[stage][mReset_position.y][mReset_position.x] = 7;  
+    updateMreset(stage);
+    mvwprintw(win1, 1, 1, "mReset item created at (%d, %d)", mReset_position.y, mReset_position.x);  // 디버깅 출력
+    wrefresh(win1);
 }
 
 
@@ -83,6 +82,8 @@ void removeMreset(int stage, WINDOW *win1) {//미션리셋아이템 없애기
         mReset_position = vmReset_item.back();
         map[stage][mReset_position.y][mReset_position.x] = 0;
         vmReset_item.pop_back();
+        mvwprintw(win1, 1, 1, "mReset item d at (%d, %d)", mReset_position.y, mReset_position.x);  // 디버깅 출력
+        wrefresh(win1);
     }
 }
 
