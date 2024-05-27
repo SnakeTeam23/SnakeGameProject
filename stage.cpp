@@ -314,7 +314,7 @@ void game() {
         mResetCnt++;
         mResetDuration++;
 
-        if (mResetDuration >= 1000) {  // 10초 경과
+        if (mResetDuration >= 30) {  // 10초 경과
             removeMreset(snake.get_level() - 1, win1);
             mReset_item_spawned = false;
             mResetCnt = 0;
