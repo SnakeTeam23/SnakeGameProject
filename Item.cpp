@@ -53,7 +53,6 @@ void createMreset(int stage, WINDOW *win1) {
     createRandom(3, stage);  
     vmReset_item.push_back(mReset_position);
     updateMreset(stage);
-    mvwprintw(win1, 1, 1, "mReset item created at (%d, %d)", mReset_position.y, mReset_position.x);  // 디버깅 출력
     wrefresh(win1);
 }
 
@@ -82,7 +81,6 @@ void removeMreset(int stage, WINDOW *win1) {//미션리셋아이템 없애기
         mReset_position = vmReset_item.back();
         map[stage][mReset_position.y][mReset_position.x] = 0;
         vmReset_item.pop_back();
-        mvwprintw(win1, 1, 1, "mReset item d at (%d, %d)", mReset_position.y, mReset_position.x);  // 디버깅 출력
         wrefresh(win1);
     }
 }

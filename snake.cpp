@@ -31,8 +31,8 @@ void Snake::randomSpawn(int map[40][50]){
     int spawnX, spawnY;
 
     while (!validSpawn && iterations < maxIterations) {
-        spawnX = rand() % (col - 20) + 10;
-        spawnY = rand() % (row - 20) + 10;
+        spawnX = rand() % (col - 20) + 5;
+        spawnY = rand() % (row - 20) + 5;
 
         if (map[spawnY][spawnX] == 0 && 
             map[spawnY + 1][spawnX] == 0 && 
@@ -63,6 +63,7 @@ void Snake::randomSpawn(int map[40][50]){
             }
         }
     }
+	setDirection(0);
 }
 
 
