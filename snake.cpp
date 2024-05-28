@@ -258,3 +258,6 @@ bool Snake::isGate(){
 	}
 	return false;
 }
+void Snake::claerWall(){
+	wall.clear();
+}

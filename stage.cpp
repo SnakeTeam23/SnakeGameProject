@@ -37,10 +37,10 @@ char missionNerf = 'X';
 char missionGate = 'X';
 bool mReset_spawnded = false;
 
-#define MISSION_BODY_LENGTH 4
-#define MISSION_GROWTH_CNT 1
-#define MISSION_POISON_CNT 1
-#define MISSION_GATE_CNT 1
+#define MISSION_BODY_LENGTH 8
+#define MISSION_GROWTH_CNT 4
+#define MISSION_POISON_CNT 2
+#define MISSION_GATE_CNT 2
 
 // 함수 원형 선언
 void start_game(float, float);
@@ -214,6 +214,7 @@ void setMission(Snake& snake, WINDOW *win1){
 
 void nextLevel(Snake& snake,WINDOW *win1){
 	if((missionBody == 'O')&&(missionGate=='O')&&(missionBuff=='O')&&(missionNerf=='O')){
+		snake.claerWall();
 		mapCnt = 0;
 		buffCnt = 0;
 		nerfCnt = 0;
@@ -230,7 +231,7 @@ void nextLevel(Snake& snake,WINDOW *win1){
 		removeBuff(snake.get_level()-1,win1);
 		removeNerf(snake.get_level()-1,win1);
 		snake.set_level(snake.get_level()+1);
-		snake.randomSpawn(map[snake.get_level()]);
+		// snake.randomSpawn(map[snake.get_level()]);
 		if (levelUpScreen(0,0, snake.get_level()) == 13) {}; //엔터 누르면 다음 레벨로 게임 계속 진행
 	}
 }
