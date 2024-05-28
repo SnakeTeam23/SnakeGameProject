@@ -153,6 +153,7 @@ char* Snake::change_List(int map[40][50]){ //2차원배열을 리스트로 변�
 				case 6 : map_list[i*col+j] = '6'; break;
 				case 8 : map_list[i*col+j] = '8'; break;
 				case 9 : map_list[i*col+j] = '9'; break;
+				case 5 : map_list[i*col+j] = '5'; break;
 			}
 		}
 

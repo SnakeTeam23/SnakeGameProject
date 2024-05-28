@@ -38,7 +38,7 @@ char missionGate = 'X';
 bool mReset_spawnded = false;
 
 #define MISSION_BODY_LENGTH 8
-#define MISSION_GROWTH_CNT 1
+#define MISSION_GROWTH_CNT 4
 #define MISSION_POISON_CNT 2
 #define MISSION_GATE_CNT 2
 
@@ -127,7 +127,7 @@ void drawMap(WINDOW* win, Snake& snake, char* table, int row, int col)
                     ch = 'X';
                     break;
 				case '5': //mReset
-				    ch = '7';
+				    ch = 'R';
 					break;
 			}
 			mvwaddch(win, y, x, ch);
