@@ -306,19 +306,6 @@ void game() {
 			nerfCnt = 1;
 		}
 
-		if (mResetCnt == 0 && !mReset_item_spawned && !mReset_item_eaten) {
-            createMreset(snake.get_level() - 1, win1);
-            mReset_item_spawned = true;
-            mResetDuration = 0;
-        }
-        mResetCnt++;
-        mResetDuration++;
-
-        if (mResetDuration >= 1000) {  // 10초 경과
-            removeMreset(snake.get_level() - 1, win1);
-            mReset_item_spawned = false;
-            mResetCnt = 0;
-        }
 
         position head = snake.plus_head();
         if (!vmReset_item.empty() && head == vmReset_item.back()) {
