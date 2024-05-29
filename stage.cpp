@@ -55,7 +55,19 @@ void showMission(WINDOW*, int);
 int levelUpScreen(float, float, int);
 void setMission(Snake&, WINDOW*);
 void nextLevel(Snake&,WINDOW*);
+int success(float, float);
 
+bool isWin = false; // 성공 여부 알려주는 전역변수
+
+
+int success(float y, float x){
+	clear();
+    initscr();
+    noecho();
+    getmaxyx(stdscr, y, x);
+    printw("\n \nCongratulation!!! You Won the Game!!!!");
+    return userInput();
+}
 
 int userInput(){
     int userInput = getch();
@@ -220,7 +232,7 @@ void nextLevel(Snake& snake,WINDOW *win1){
 		nerfCnt = 0;
 		mResetDuration =0;
 		mReset_spawnded = false;
-		snake.resize(3);
+		// snake.resize(3);
 		snake.apple =0;
 		snake.poison =0;
 		snake.set_gate_pass_cnt(0);
@@ -231,8 +243,14 @@ void nextLevel(Snake& snake,WINDOW *win1){
 		removeBuff(snake.get_level()-1,win1);
 		removeNerf(snake.get_level()-1,win1);
 		snake.set_level(snake.get_level()+1);
-		// snake.randomSpawn(map[snake.get_level()]);
-		if (levelUpScreen(0,0, snake.get_level()) == 13) {}; //엔터 누르면 다음 레벨로 게임 계속 진행
+		if(snake.get_level() == 5){
+			isWin = true;
+			snake.setEnd(true);
+		}
+		else{
+			snake.randomSpawn(map[snake.get_level() - 1]);
+			if (levelUpScreen(0,0, snake.get_level()) == 13) {}; //엔터 누르면 다음 레벨로 게임 계속 진행
+		}
 	}
 }
 
@@ -384,7 +402,8 @@ void game() {
 int main(){
 	int a = 0;
     start_game(0, 0);
-    finishGame(0, 0);
+	if(isWin) success(0, 0);
+	else finishGame(0, 0);
 	endwin();
 	return 0;
 }
