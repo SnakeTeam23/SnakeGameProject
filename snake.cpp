@@ -1,4 +1,5 @@
 #include "snake.h"
+#include <ctime>
 using namespace std;
 
 extern int map[4][40][50];
@@ -25,44 +26,23 @@ Snake::Snake(int r, int c) : row(r), col(c){
 Snake::~Snake(){ delete [] map_list; }
 
 void Snake::randomSpawn(int map[40][50]){
-    bool validSpawn = false;
-    int maxIterations = 1656; 
-    int iterations = 0;
-    int spawnX, spawnY;
-
-    while (!validSpawn && iterations < maxIterations) {
-        spawnX = rand() % (col - 20) + 10;
-        spawnY = rand() % (row - 20) + 10;
-
-        if (map[spawnY][spawnX] == 0 && 
-            map[spawnY + 1][spawnX] == 0 && 
-            map[spawnY + 2][spawnX] == 0) {
-
-            validSpawn = true;
-            snake_vec.clear();
+    // bool validSpawn = false;
+    // int maxIterations = 1656; 
+    // int iterations = 0;
+	srand(time(0));
+    int spawnX = 0, spawnY = 0;
+	while(true){
+		spawnX = rand() % (col - 10) + 3;
+		spawnY = rand() % (row - 10) + 3;
+		if (map[spawnY][spawnX] == 0 && map[spawnY + 1][spawnX] == 0 && map[spawnY + 2][spawnX] == 0){
+			snake_vec.clear();
             for (int i = 0; i < 3; i++) {
                 snake_vec.push_back(Point(spawnX, spawnY + i));
             }
-        }
-        iterations++;
-    }
-
-    if (!validSpawn) {
-        for (iterations = 0; iterations < maxIterations; ++iterations) {
-            spawnX = rand() % (col - 10) + 5;
-            spawnY = rand() % (row - 10) + 5;
-
-            if (map[spawnY][spawnX] == 0 && 
-                map[spawnY + 1][spawnX] == 0 && 
-                map[spawnY + 2][spawnX] == 0) {
-                snake_vec.clear();
-                for (int i = 0; i < 3; i++) {
-                    snake_vec.push_back(Point(spawnX, spawnY + i));
-                }
-                return;
-            }
-        }
-    }
+			break;
+		}
+	}
+	setDirection(0);
 }
 
 
@@ -153,6 +133,7 @@ char* Snake::change_List(int map[40][50]){ //2차원배열을 리스트로 변�
 				case 6 : map_list[i*col+j] = '6'; break;
 				case 8 : map_list[i*col+j] = '8'; break;
 				case 9 : map_list[i*col+j] = '9'; break;
+				case 5 : map_list[i*col+j] = '5'; break;
 			}
 		}
 
@@ -255,4 +236,7 @@ bool Snake::isGate(){
 		if(snake_vec[i] == gate[0] || snake_vec[i] == gate[1]) return true;
 	}
 	return false;
+}
+void Snake::claerWall(){
+	wall.clear();
 }

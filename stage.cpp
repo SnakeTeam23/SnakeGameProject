@@ -13,20 +13,29 @@ using namespace std;
 int mapCnt = 0;
 int buffCnt = 0;
 int nerfCnt = 0;
+int mResetCnt = 0;
+int mResetDuration = 0;
+
 
 extern int map[4][40][50];
 extern int map[4][40][50];
 extern void createBuff(int stage, WINDOW *win1);
 extern void createNerf(int stage, WINDOW *win1);
+extern void createMreset(int stage, WINDOW *win1);
 extern void removeNerf(int stage, WINDOW *win1);
 extern void removeBuff(int stage, WINDOW *win1);
+extern void removeMreset(int stage, WINDOW *win1);
+
+
 extern vector<position> vpoison_item;
 extern vector<position> vapple_item;
+extern vector<position> vmReset_item;
 
 char missionBody = 'X';
 char missionBuff = 'X';
 char missionNerf = 'X';
 char missionGate = 'X';
+bool mReset_spawnded = false;
 
 #define MISSION_BODY_LENGTH 8
 #define MISSION_GROWTH_CNT 4
@@ -46,7 +55,19 @@ void showMission(WINDOW*, int);
 int levelUpScreen(float, float, int);
 void setMission(Snake&, WINDOW*);
 void nextLevel(Snake&,WINDOW*);
+int success(float, float);
 
+bool isWin = false; // 성공 여부 알려주는 전역변수
+
+
+int success(float y, float x){
+	clear();
+    initscr();
+    noecho();
+    getmaxyx(stdscr, y, x);
+    printw("\n \nCongratulation!!! You Won the Game!!!!");
+    return userInput();
+}
 
 int userInput(){
     int userInput = getch();
@@ -117,6 +138,9 @@ void drawMap(WINDOW* win, Snake& snake, char* table, int row, int col)
                 case '6': //nerf
                     ch = 'X';
                     break;
+				case '5': //mReset
+				    ch = 'R';
+					break;
 			}
 			mvwaddch(win, y, x, ch);
 		}
@@ -202,10 +226,13 @@ void setMission(Snake& snake, WINDOW *win1){
 
 void nextLevel(Snake& snake,WINDOW *win1){
 	if((missionBody == 'O')&&(missionGate=='O')&&(missionBuff=='O')&&(missionNerf=='O')){
+		snake.claerWall();
 		mapCnt = 0;
 		buffCnt = 0;
 		nerfCnt = 0;
-		snake.resize(3);
+		mResetDuration =0;
+		mReset_spawnded = false;
+		// snake.resize(3);
 		snake.apple =0;
 		snake.poison =0;
 		snake.set_gate_pass_cnt(0);
@@ -216,8 +243,14 @@ void nextLevel(Snake& snake,WINDOW *win1){
 		removeBuff(snake.get_level()-1,win1);
 		removeNerf(snake.get_level()-1,win1);
 		snake.set_level(snake.get_level()+1);
-		snake.randomSpawn(map[snake.get_level()]);
-		if (levelUpScreen(0,0, snake.get_level()) == 13) {}; //엔터 누르면 다음 레벨로 게임 계속 진행
+		if(snake.get_level() == 5){
+			isWin = true;
+			snake.setEnd(true);
+		}
+		else{
+			snake.randomSpawn(map[snake.get_level() - 1]);
+			if (levelUpScreen(0,0, snake.get_level()) == 13) {}; //엔터 누르면 다음 레벨로 게임 계속 진행
+		}
 	}
 }
 
@@ -294,6 +327,43 @@ void game() {
 			createNerf(snake.get_level()-1,win1);
 			nerfCnt = 1;
 		}
+		if((missionBody == 'O')||(missionGate=='O')||(missionBuff=='O')||(missionNerf=='O')){
+			mResetDuration = 1;
+		}
+
+
+		if (mResetDuration !=0 && !mReset_spawnded) {
+            createMreset(snake.get_level() - 1, win1);
+            mResetCnt = 1;
+			mResetDuration = 2;
+			mReset_spawnded = true;
+        }
+
+		if(mReset_spawnded){
+			mResetCnt+= 1;
+		}
+
+        if (mResetCnt == 100) {  // 10초 경과
+            removeMreset(snake.get_level() - 1, win1);
+            mResetCnt = 0;
+			mResetDuration =3;			
+        }
+
+        position head = snake.plus_head();
+        if (!vmReset_item.empty() && head == vmReset_item.back()) {
+            // 미션 아이템 먹음
+            missionBody = 'X'; 
+		    missionBuff = 'X';
+		    missionNerf = 'X';
+		    missionGate = 'X'; 
+			snake.resize(3);
+		    snake.apple =0;
+		    snake.poison =0;
+		    snake.set_gate_pass_cnt(0);
+            removeMreset(snake.get_level() - 1, win1);
+			mResetCnt = 0;
+			mResetDuration =4;
+		}
 
 		int input = wgetch(win1);
 		char d = snake.getDirection();
@@ -332,7 +402,8 @@ void game() {
 int main(){
 	int a = 0;
     start_game(0, 0);
-    finishGame(0, 0);
+	if(isWin) success(0, 0);
+	else finishGame(0, 0);
 	endwin();
 	return 0;
 }
