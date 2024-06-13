@@ -6,7 +6,7 @@
 #include "position.h"
 using namespace std;
 
-const int snakeMaxLen = 8;
+const int snakeMaxLen = 6;
 
 class Snake{
 private:
