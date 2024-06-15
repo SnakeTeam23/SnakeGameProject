@@ -20,7 +20,7 @@ Snake::Snake(int r, int c) : row(r), col(c){
 		level=1;
 		snakeLen=3;
 		set_gate_pass_cnt(0);
-	}
+}
 
 //소멸자
 Snake::~Snake(){ delete [] map_list; }
