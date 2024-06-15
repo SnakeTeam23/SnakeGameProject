@@ -311,7 +311,7 @@ void game() {
 		}
 		buffCnt+= 1;
 
-		if (buffCnt == 100) { // 10초에 한번씩 바뀝니다.
+		if (buffCnt == 100) { // 15초에 한번씩 바뀝니다.
 			removeBuff(snake.get_level()-1,win1);
 			createBuff(snake.get_level()-1,win1);
 			buffCnt = 1;
@@ -322,7 +322,7 @@ void game() {
 		}
 		nerfCnt+= 1;
 
-		if (nerfCnt == 70) { // 7초에 한번씩 바뀝니다.
+		if (nerfCnt == 70) { // 10.5초에 한번씩 바뀝니다.
 			removeNerf(snake.get_level()-1,win1);
 			createNerf(snake.get_level()-1,win1);
 			nerfCnt = 1;
@@ -343,7 +343,7 @@ void game() {
 			mResetCnt+= 1;
 		}
 
-        if (mResetCnt == 100) {  // 10초 경과
+        if (mResetCnt == 100) {  // 약 15초 경과
             removeMreset(snake.get_level() - 1, win1);
             mResetCnt = 0;
 			mResetDuration =3;			
