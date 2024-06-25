@@ -8,16 +8,13 @@ using namespace std;
 
 class position{
 public:
-    //attributes
     int x;
     int y;
+    
+    position& randomPosition();
+    position& operator=(const position& p);
+    bool operator==(const position p);
 
-    //Constructor
     position();
     position(int tempx, int tempy);
-    
-    //fuction & opertor
-    position& randomPosition();
-    position& operator=(const position& v);
-    bool operator==(const position v);
 };

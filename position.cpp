@@ -1,4 +1,6 @@
 #include "position.h"
+#define COL 50
+#define ROW 40
 using namespace std;
 
 //Constructor
@@ -12,23 +14,20 @@ position::position(int tempx, int tempy){
     y = tempy;
 }
 
+position& position::operator=(const position& p){
+    (*this).x = p.x;
+    (*this).y = p.y;
+    return *this;
+}
+
 position& position::randomPosition(){
     srand(time(NULL));
-    this ->x = rand() % 50;
-    this ->y = rand() % 40;
+    (*this).x = rand() % COL;
+    (*this).y = rand() % ROW;
     return *this;
 }
 
-//operator
-position& position::operator=(const position& v){
-    this -> x = v.x;
-    this -> y = v.y;
-    return *this;
-}
-
-bool position::operator==(const position v){
-    if((x == v.x) && ( y == v.y))
-        return true;
-    else
-        return false;
+bool position::operator==(const position p){
+    if((x == p.x) && (y == p.y)) return true;
+    return false;
 }

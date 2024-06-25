@@ -1,49 +1,50 @@
 #include "point.h"
 using namespace std;
 
-//Constructor
 Point::Point(): x(0), y(0){}
-Point::Point(int x, int y) {setX(x); setY(y);}
+Point::Point(int x, int y):x(x), y(y) {}
+Point::~Point(){}
 
-//setter and getter
-void Point::setX(int x){this->x = x;}
-void Point::setY(int y){this->y = y;}
-int Point::getX() const {return this->x;}
-int Point::getY() const {return this->y;}
+void Point::set_x(int x){(*this).x = x;}
+void Point::set_y(int y){(*this).y = y;}
+int Point::get_x() const {return x;}
+int Point::get_y() const {return y;}
 
-//operator overloading
-Point& Point::operator=(const Point& v){
-	setX(v.getX());
-	setY(v.getY());
+
+Point& Point::operator+=(const Point& p){
+	x = get_x() + p.get_x();
+	y = get_y() + p.get_y();
 	return *this;
 }
 
-Point& Point::operator+=(const Point& v){
-	setX(getX() + v.getX());
-	setY(getY() + v.getY());
+Point Point::operator-(const Point& p){
+	Point v2(x, y);
+	return v2 -= p;
+}
+
+Point Point::operator+(const Point& p){
+	Point v2(x, y);
+	return v2 += p;
+}
+
+
+Point& Point::operator-=(const Point& p){
+	set_x(x - p.get_x());
+	set_y(y - p.get_y());
 	return *this;
 }
 
-Point Point::operator+(const Point& v){
-	Point v2(getX(), getY());
-	return v2 += v;
+bool Point::operator!=(const Point& p){
+	return !((*this) == p);
 }
 
-Point& Point::operator-=(const Point& v){
-	setX(getX() - v.getX());
-	setY(getY() - v.getY());
+bool Point::operator==(const Point& p){
+	return x == p.get_x() && y == p.get_y();
+}
+
+Point& Point::operator=(const Point& p){
+	x = p.get_x();
+	y = p.get_y();
 	return *this;
 }
 
-Point Point::operator-(const Point& v){
-	Point v2(getX(), getY());
-	return v2 -= v;
-}
-
-bool Point::operator==(const Point& v){
-	return getX() == v.getX() && getY() == v.getY();
-}
-
-bool Point::operator!=(const Point& v){
-	return !operator == (v);
-}

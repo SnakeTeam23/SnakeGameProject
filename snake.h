@@ -24,32 +24,37 @@ private:
 public:
 	Snake(int r, int c);
 	~Snake();
-	int buffItem=0;
-	int nerfItem=0;
+	int apple = 0;
+	int  poison = 0;
 	void setDirection(int d);
-	void mvSnakeHead(int map[40][50]);
-	void mvSnakeBody();
-	char* setMaptoList(int map[40][50]);
+	void move_snake_head(int map[40][50]);
+	void move_snake_body();
+	char* change_List(int map[40][50]);
 	void setEnd(bool e);
 	int gateDirection(Point gate, int map[40][50]);
 	char getDirection();
-	bool getEnd();
+	bool isEnd();
 	int getSpeed();
 	int getRow();
 	int getCol();
+	void randomSpawn(int map[40][50]);
 	
-	void setGate(int map[40][50]);
-	void rmGate(int map[40][50]);
-	void setGateCnt(int i);
-	int getGateCnt();
-	int getLevel();
-	int getSnakeLen();
+	void initGate(int map[40][50]);
+	void remove_gate(int map[40][50]);
+	void set_gate_pass_cnt(int i);
+	int get_gate_pass_cnt();
+	int get_level();
+	int get_snake_length();
 	
-	int getSize();
-	void setLevel(int new_level);
-	void decreaseSnake(WINDOW *win1);
-	void breakItem(WINDOW *win1);
-	position plusHead();
+	int get_size();
+	void set_level(int new_level);
+	void decrease_snake(WINDOW *win1);
+	void break_item(WINDOW *win1);
+	position plus_head();
 	void resize(int new_size);
-	void changeSnakeLen();
+	void change_snake_length();
+
+	void checkVisitWall(bool gateNum, int map[40][50]);
+	bool isGate();
+	void claerWall();
 };
